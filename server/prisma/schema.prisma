@@ -29,6 +29,8 @@ model User {
   createdAt           DateTime      @default(now())
 
   products Product[] @relation("sellerProducts")  // seller owned products
+  cart Cart?
+  order Order[]
 } 
 
 model Category{
@@ -51,6 +53,8 @@ model Product{
   category  Category  @relation(fields:[categoryId], references:[id])
   seller    User      @relation("sellerProducts",fields:[sellerId] ,references:[id])
   images    Images[]
+  cartItems CartItems[]
+  orderItem OrderItem[]  
 }
 
 
@@ -70,7 +74,7 @@ model Cart{
   createdAt   DateTime    @default(now())
 
   user User   @relation(fields :[userId ],references:[id])
-  items   CartItems[]
+  cartItems   CartItems[]
 }
 
 model CartItems{
@@ -80,8 +84,40 @@ model CartItems{
   quantity  Int       @default(1)
   createdAt  DateTime  @default(now())
 
-
-  cart     Cart     @relation(fields: [cartId], references: [id])
+ cart     Cart     @relation(fields: [cartId], references: [id])
   product  Product  @relation(fields: [productId], references: [id])
 
+}
+
+
+model Order{
+  id    String    @id @default(uuid())
+  userId  String
+  total   String
+  status  String
+  createdAt   DateTime  @default(now())
+
+  user  User  @relation(fields:[userId] ,references:[id])
+  items OrderItem[]
+}
+
+
+model OrderItem{
+  id  String    @id   @default(uuid())
+  orderId       String
+  productId     String
+  quantity      Int
+  price         Float
+
+  order Order       @relation(fields:[orderId] , references:[id])
+  product Product   @relation(fields:[productId],references:[id])
+}
+
+
+enum  orderStatus{
+  PENDING
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }
