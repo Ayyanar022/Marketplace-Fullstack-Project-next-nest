@@ -93,8 +93,8 @@ model CartItems{
 model Order{
   id    String    @id @default(uuid())
   userId  String
-  total   String
-  status  String
+  total   Int
+  status  orderStatus    @default(PENDING)
   createdAt   DateTime  @default(now())
 
   user  User  @relation(fields:[userId] ,references:[id])
