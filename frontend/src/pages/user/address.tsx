@@ -1,12 +1,13 @@
+import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import UserLayout from '@/layouts/UserLayout'
 import React, { ReactElement } from 'react'
 
 const Address = () => {
+
+  useProtectedRoute(['USER']);
   return (
     <div>
         address
-address
-      
     </div>
   )
 }

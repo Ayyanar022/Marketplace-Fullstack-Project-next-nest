@@ -1,7 +1,10 @@
+import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import SellerLayout from '@/layouts/SellerLayout'
 import  { ReactElement } from 'react'
 
 const SellerHomePage = () => {
+
+  useProtectedRoute(['SELLER'])
   return (
     <div>
       <h1 className='text-2xl font-semibold'> Dashboard Page (Layout Test)</h1>

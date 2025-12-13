@@ -1,7 +1,12 @@
+import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import SellerLayout from '@/layouts/SellerLayout'
 import React, { ReactElement } from 'react'
 
 const Products = () => {
+
+  useProtectedRoute(['SELLER'])
+
+
   return (
     <div>
       Products

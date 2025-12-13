@@ -1,11 +1,18 @@
+import { loginSuccess } from '@/features/auth/authSlice'
+import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import UserLayout from '@/layouts/UserLayout'
-import React, { ReactElement } from 'react'
+import { RootState } from '@reduxjs/toolkit/query'
+import React, { ReactElement, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Profile = () => {
+
+  useProtectedRoute(["USER"]);
+
+
   return (
     <div>
       profile
-profile
     </div>
   )
 }

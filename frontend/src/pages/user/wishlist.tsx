@@ -1,11 +1,14 @@
+import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import UserLayout from '@/layouts/UserLayout'
 import React, { ReactElement } from 'react'
 
 const Wishlist = () => {
+
+  useProtectedRoute(['USER']);
+
   return (
     <div>
       wishlist
-wishlist
     </div>
   )
 }
