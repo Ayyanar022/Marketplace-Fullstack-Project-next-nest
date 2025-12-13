@@ -1,4 +1,5 @@
-import React from 'react'
+import SellerLayout from '@/layouts/SellerLayout'
+import React, { ReactElement } from 'react'
 
 const Products = () => {
   return (
@@ -6,6 +7,10 @@ const Products = () => {
       Products
     </div>
   )
+}
+
+Products.getLayout = function getLayout(page:ReactElement){
+  return <SellerLayout>{page}</SellerLayout>
 }
 
 export default Products

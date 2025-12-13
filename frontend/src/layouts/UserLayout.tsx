@@ -37,6 +37,8 @@
 import Footer from "@/components/common/Footer";
 import Navbar from "@/components/common/Navbar";
 import NavItem from "@/components/common/NavItem";
+import Sidebar from "@/components/common/Sidebar";
+import { userNav } from "@/config/NavItemConfig";
 import React from "react";
 
 interface UserLayoutProps {
@@ -51,7 +53,8 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
       {/* Body */}
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside className="w-64 bg-cardBg border-r border-accent/10 p-4">
+      <Sidebar title="MY Account" items={userNav}/>
+        {/* <aside className="w-64 bg-cardBg border-r border-accent/10 p-4">
          <nav className="flex flex-col gap-3">
             <span className="font-semibold text-textPrimary">
               MY Account
@@ -62,12 +65,8 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
          <NavItem href='/user/wishlist' label='WishList'/>
          <NavItem href='/user/address' label='Address'/>
 
-         {/* <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">Profile</a>
-         <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">Profile</a>
-         <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">WishList</a>
-         <a href=" " className="text-sm text-textSecondary hover:text-primary cursor-pointer">Address</a> */}
     </nav>
-        </aside>
+        </aside> */}
         
 
         {/* Page content */}

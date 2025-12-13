@@ -1,5 +1,7 @@
 import Navbar from "@/components/common/Navbar";
 import NavItem from "@/components/common/NavItem";
+import Sidebar from "@/components/common/Sidebar";
+import { sellerNav } from "@/config/NavItemConfig";
 
 
 interface SellerLayoutProps {
@@ -11,7 +13,9 @@ const SellerLayout : React.FC<SellerLayoutProps > = ({children})=>{
     return(
         <div className="min-h-screen flex bg-bgMain text-textPrimary">
             {/* sidebar */}
-            <aside className=" w-64 bg-cardBg border-r border-accent/10 p-4">
+            <Sidebar title="Seller Panel" items={sellerNav} />
+          
+            {/* <aside className=" w-64 bg-cardBg border-r border-accent/10 p-4">
                 <h2 className="text-lg font-semibold mb-4 text-primary">
                     Seller Panel
                 </h2>
@@ -21,21 +25,9 @@ const SellerLayout : React.FC<SellerLayoutProps > = ({children})=>{
                   <NavItem href='/seller/products' label='Products'/>
                   <NavItem href='/seller/orders' label='Orders'/>
                   <NavItem href='/seller/product-new' label='Add Product'/>
-                  
-                    {/* <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
-                        Dashboard
-                    </a> 
-                      <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
-                        Products
-                    </a> 
-                      <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
-                        Orders
-                    </a>                    
-                      <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
-                        add Products
-                    </a>                     */}
+                                  
                 </nav>
-            </aside>
+            </aside> */}
 
             {/* Main Area */}
             <div className="flex-1 flex flex-col">
