@@ -36,6 +36,7 @@
 
 import Footer from "@/components/common/Footer";
 import Navbar from "@/components/common/Navbar";
+import NavItem from "@/components/common/NavItem";
 import React from "react";
 
 interface UserLayoutProps {
@@ -56,11 +57,15 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
               MY Account
             </span>
          
+         <NavItem href='/user/profile' label='Profile'/>
+         <NavItem href='/user/orders' label='Profile'/>
+         <NavItem href='/user/wishlist' label='WishList'/>
+         <NavItem href='/user/address' label='Address'/>
 
+         {/* <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">Profile</a>
          <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">Profile</a>
-         <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">Orders</a>
          <a href="" className="text-sm text-textSecondary hover:text-primary cursor-pointer">WishList</a>
-         <a href=" " className="text-sm text-textSecondary hover:text-primary cursor-pointer">Address</a>
+         <a href=" " className="text-sm text-textSecondary hover:text-primary cursor-pointer">Address</a> */}
     </nav>
         </aside>
         

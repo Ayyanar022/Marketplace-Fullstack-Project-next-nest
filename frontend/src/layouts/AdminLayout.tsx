@@ -1,4 +1,5 @@
 import Navbar from "@/components/common/Navbar";
+import NavItem from "@/components/common/NavItem";
 
 
 
@@ -16,11 +17,17 @@ const AdminLayout: React.FC<AdminLayoutProps> =({children})=>{
                     Admin Panel
                 </h2>
             <nav className="flex flex-col gap-3">
-                <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Dashbord</a>
+               <NavItem href='/admin'  label='Dashboard'/>
+               <NavItem href='admin/sellers'  label='sellers'/>
+               <NavItem href='/admin/products'  label='Products'/>
+               <NavItem href='/admin/categories'  label='Categories'/>
+               <NavItem href='/admin/analytics'  label='Analytics'/>
+               
+                {/* <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Dashbord</a>
                 <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Sellers</a>
                 <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Products</a>
                 <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Categories</a>
-                <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Analytics</a>
+                <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">Analytics</a> */}
             </nav>
 
             </aside>

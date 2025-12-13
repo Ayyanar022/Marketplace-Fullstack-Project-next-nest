@@ -1,4 +1,5 @@
 import Navbar from "@/components/common/Navbar";
+import NavItem from "@/components/common/NavItem";
 
 
 interface SellerLayoutProps {
@@ -16,7 +17,12 @@ const SellerLayout : React.FC<SellerLayoutProps > = ({children})=>{
                 </h2>
 
                 <nav className="flex flex-col gap-3">
-                    <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
+                  <NavItem href='/seller' label='DashBoard'/>
+                  <NavItem href='/seller/products' label='Products'/>
+                  <NavItem href='/seller/orders' label='Orders'/>
+                  <NavItem href='/seller/product-new' label='Add Product'/>
+                  
+                    {/* <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
                         Dashboard
                     </a> 
                       <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
@@ -27,7 +33,7 @@ const SellerLayout : React.FC<SellerLayoutProps > = ({children})=>{
                     </a>                    
                       <a className="text-sm text-textSecondary hover:text-primary cursor-pointer">
                         add Products
-                    </a>                    
+                    </a>                     */}
                 </nav>
             </aside>
 
