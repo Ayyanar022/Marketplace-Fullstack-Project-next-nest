@@ -15,7 +15,7 @@ export class UsersService {
             data:{
                 name:data.name,
                 email:data.email,
-                password:data.password,
+                password:hashedPassword,
             }
         })
     }

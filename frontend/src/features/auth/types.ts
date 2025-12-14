@@ -4,6 +4,7 @@ export type UserRole = "USER" | "SELLER" |"ADMIN" ;
 
 export interface AuthUser {
     id:string;
+    name:string;
     email:string;
     role:Role;
 }

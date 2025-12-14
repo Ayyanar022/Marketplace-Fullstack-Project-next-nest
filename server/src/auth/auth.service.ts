@@ -18,7 +18,8 @@ export class AuthService {
 
         const hashed = await bcrypt.hash(dto.password , 10);
         const user = await this.userService.createUser(dto,hashed);
-        return this.createToken(user.id,user.email,user.role)
+        const accessToken = this.createToken(user.id,user.email,user.role)
+        return {user:{name:user.name ,email: user.email ,role:user.role ,id:user.id} , accessToken:accessToken.token}
     }
 
     async login(dto:LoginDto){
@@ -28,7 +29,9 @@ export class AuthService {
         const isMatch = await bcrypt.compare(dto.password,user.password)
         if(!isMatch) return new BadRequestException("Invalid credentials")
         
-        return this.createToken(user.id,user.email,user.role)
+        const accessToken = this.createToken(user.id,user.email,user.role)
+        
+        return {user:{name:user.name ,email:user.email ,role:user.role ,id:user.id} ,accessToken :accessToken.token}
     }
 
     createToken(id:string,email:string,role:Role){

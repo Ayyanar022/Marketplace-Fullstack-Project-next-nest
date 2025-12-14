@@ -26,7 +26,7 @@ const Navbar = () => {
             </>
           ):(
             <>
-            <span className='text-textSecondary'> {user?.email}</span>
+            <span className='text-textSecondary text-base capitalize'> {user?.name}</span>
             <button className="text-red-500 hover:underline" onClick={()=>dispatch(logout())}>Logout</button>
             </>
           )}
