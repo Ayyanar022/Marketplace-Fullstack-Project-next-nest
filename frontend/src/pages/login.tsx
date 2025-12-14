@@ -33,7 +33,10 @@ const Login = () => {
         // redirect by role
         if(data.user.role==='ADMIN') router.push("/admin");
         else if(data.user.role ==='SELLER') router.push("/seller");
-        else router.push("/user/profile");
+        else {
+          console.log("user ---")
+          router.push("/user/profile");
+        }
 
       }catch(e:any){
         setError(e.response?.data?.message||"Login failed");

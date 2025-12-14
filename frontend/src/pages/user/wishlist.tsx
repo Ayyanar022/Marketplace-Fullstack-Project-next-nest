@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 
 const Wishlist = () => {
 
-  useProtectedRoute(['USER']);
+  useProtectedRoute(['CUSTOMER']);
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import { Role } from "@/types/role";
 
-export type UserRole = "USER" | "SELLER" |"ADMIN" ;
+export type UserRole = "CUSTOMER" | "SELLER" |"ADMIN" ;
 
 export interface AuthUser {
     id:string;
@@ -13,4 +13,5 @@ export interface AuthSate{
     isAuthenticated :boolean;
     user:AuthUser | null ;
     accessToken :string | null;
+    authChecked:boolean ;
 }

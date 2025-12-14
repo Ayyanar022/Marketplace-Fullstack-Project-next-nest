@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthSate, AuthUser } from "./types";
 import { saveAuth ,clearAuth } from "@/utils/authStorage";
+import { stat } from "fs";
 
 
 
@@ -8,6 +9,7 @@ const initialState:AuthSate ={
     isAuthenticated:false,
     user:null,
     accessToken:null,
+    authChecked: false, 
 }
 
 
@@ -22,6 +24,7 @@ const authSlice = createSlice({
             state.isAuthenticated = true ;
             state.user = action.payload.user ;
             state.accessToken = action.payload.token;
+            state.authChecked = true ;
 
             saveAuth({
                 user:action.payload.user,
@@ -33,13 +36,21 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             state.user = null ;
             state.accessToken = null ;
+            state.authChecked = true ;
 
             clearAuth()
+        },
+
+        authRestored(state,action){
+            state.isAuthenticated = true ;
+            state.user = action.payload.user;
+            state.accessToken = action.payload.token;
+            state.authChecked = true;
         }
     }
 
 })
 
 
-export const {loginSuccess , logout} = authSlice.actions;
+export const {loginSuccess , logout ,authRestored} = authSlice.actions;
 export default authSlice.reducer;

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Profile = () => {
 
-  useProtectedRoute(["USER"]);
+  useProtectedRoute(["CUSTOMER"]);
 
 
   return (

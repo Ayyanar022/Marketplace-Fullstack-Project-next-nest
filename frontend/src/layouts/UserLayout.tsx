@@ -53,21 +53,7 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
       {/* Body */}
       <div className="flex flex-1">
         {/* Sidebar */}
-      <Sidebar title="MY Account" items={userNav}/>
-        {/* <aside className="w-64 bg-cardBg border-r border-accent/10 p-4">
-         <nav className="flex flex-col gap-3">
-            <span className="font-semibold text-textPrimary">
-              MY Account
-            </span>
-         
-         <NavItem href='/user/profile' label='Profile'/>
-         <NavItem href='/user/orders' label='Profile'/>
-         <NavItem href='/user/wishlist' label='WishList'/>
-         <NavItem href='/user/address' label='Address'/>
-
-    </nav>
-        </aside> */}
-        
+      <Sidebar title="MY Account" items={userNav}/>      
 
         {/* Page content */}
         <main className="flex-1 p-6 bg-bgMain">

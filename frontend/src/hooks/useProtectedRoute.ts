@@ -4,23 +4,29 @@ import { RootState } from "@/features/store";
 import { useEffect } from "react";
 
 
-export const useProtectedRoute = ( allowRoles : ("USER" |'SELLER'| 'ADMIN')[])=>{
+export const useProtectedRoute = ( allowRoles : ("CUSTOMER" |'SELLER'| 'ADMIN')[])=>{
    
     const router= useRouter();
-    const {isAuthenticated ,user}  = useSelector((state:RootState)=>state.auth);
+    const {isAuthenticated ,user ,authChecked}  = useSelector((state:RootState)=>state.auth);
 
     useEffect(()=>{
+        if(!router.isReady)return // wait for router
+        if(!authChecked) return // wait for auth
         if(!isAuthenticated){
             router.replace('/login');
             return;
         }
-
+        
         if(user && !allowRoles.includes(user.role)){
             router.replace('/')
         }
 
-    },[isAuthenticated,user,allowRoles,router])
-
-
+    },[
+        router.isReady,
+        authChecked,
+        isAuthenticated,
+        user,
+        allowRoles,
+        router])
 };
 
