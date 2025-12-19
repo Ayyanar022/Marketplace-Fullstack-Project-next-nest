@@ -3,6 +3,7 @@ import { loginSuccess } from '@/features/auth/authSlice';
 import PublicLayout from '@/layouts/PublicLayout'
 import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react'
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux'
 
 const Login = () => {
@@ -16,13 +17,17 @@ const Login = () => {
   const [error ,setError] = useState('');
 
   const handleSubmit = async(e:React.FormEvent)=>{
-    e.preventDefault();
-    setError('');
+      e.preventDefault();
+      setError('');
       setLoading(true);
 
       try{
         const data = await loginApi(email,password);
+        if(data.status===400) return toast.error(data.response.message||"Invalid");
         
+        console.log("data",data)
+       
+          // to store crrent user in store
         dispatch(
           loginSuccess({
             user:data.user,
@@ -33,12 +38,10 @@ const Login = () => {
         // redirect by role
         if(data.user.role==='ADMIN') router.push("/admin");
         else if(data.user.role ==='SELLER') router.push("/seller");
-        else {
-          console.log("user ---")
-          router.push("/user/profile");
-        }
+        else router.push("/user/profile");
 
       }catch(e:any){
+        console.log(e)
         setError(e.response?.data?.message||"Login failed");
       }finally{
         setLoading(false);

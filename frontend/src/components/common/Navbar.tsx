@@ -8,6 +8,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const {isAuthenticated ,user}  = useSelector( (state:RootState)=>state.auth);
+  console.log("nave--",user,isAuthenticated)
 
 
   return (

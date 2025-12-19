@@ -9,6 +9,7 @@ import { Provider, useDispatch } from "react-redux";
 import { store } from "@/features/store";
 import { getAuth } from "@/utils/authStorage";
 import { authRestored, loginSuccess, logout } from "@/features/auth/authSlice";
+import { Toaster } from "react-hot-toast";
 
 export type NextPageWithLayout = NextPage & {
   getLayout? : (page:ReactElement)=>ReactNode;
@@ -45,7 +46,13 @@ export default function App (props:AppPropsWithLayout){
 
     return (
       <Provider store={store}>
+        <>
        <AppInitializer  {...props}/>
+       <Toaster 
+            position="top-right"
+            toastOptions={{duration:3000}}
+        />
+        </>
       </Provider>
     )
 }
