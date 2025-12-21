@@ -1,15 +1,149 @@
 import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import SellerLayout from '@/layouts/SellerLayout'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
+import {Category} from '@/types/category'
+import { getCategories } from '@/api/categoryApi'
+import toast from 'react-hot-toast'
+import { createProduct } from '@/api/productApi'
+import { useRouter } from 'next/router'
 
 const ProductNew = () => {
 
   useProtectedRoute(['SELLER'])
+  const router = useRouter()
+
+  const formInitialState = {
+    name:"",
+    description:"",
+    price:"",
+    imageUrl:"",
+    categoryId:"",
+
+  }
+
+
+  const [categories ,setCategories] = useState<Category[]>([]);
+  const [formData,setFormData] = useState(formInitialState)
+  const [loading,setLoadng] = useState(false);
+
+
+  const handleChange = (e:any)=>{
+    const {value,name} = e.target;
+    setFormData((prev)=>{
+
+      return(
+        {
+          ...prev,
+          [name]:value
+        }
+      )
+    })
+  }
+
+
+  // to fetch category data
+  useEffect(()=>{
+    const loadCategories = async ()=>{
+      try{
+        const data = await getCategories();
+        setCategories(data);        
+      }catch(e){
+        toast.error("Failed to load Categories")
+      }
+    }
+
+    loadCategories();
+  },[])
+
+
+  const handleSubmitAdd = async (e:React.FormEvent)=>{
+    e.preventDefault();
+    console.log(formData)
+
+    if(!formData.categoryId || !formData.name || !formData.price
+      ||!formData.description 
+    )return toast.error("Please File All Fields");
+
+    setLoadng(true);
+    try{
+     const res = await createProduct({name:formData.name ,
+       description:formData.description ,
+      categoryId: formData.categoryId,
+      price:+formData.price,
+      // imageUrl :formData.imageUrl,
+      })
+
+      console.log("res---",res)
+
+      toast.success("Product added successfully");
+      router.push("/seller/products")
+    }catch(e){
+      toast.error("Failed to add Product")
+    }finally{
+      setLoadng(false)
+    }
+  }
+
+  const handleCalcel = ()=>setFormData(formInitialState)
 
 
   return (
-    <div>
-      product-new
+    <div className='max-w-xl'>
+      <h1 className='text-2xl font-semibold mb-6'>Add Product</h1>
+
+      <form  className='flex flex-col gap-4'>
+        <input type="text"
+        name='name'
+        value={formData.name}
+        onChange={handleChange}
+        className='outline-none border p-2 rounded'
+        placeholder='Product Name' />
+
+        <input type="number"
+        name='price'
+        value={formData.price}
+        onChange={handleChange}
+        placeholder='Price'
+          className='outline-none border p-2 rounded'
+         />
+
+         <select name="categoryId"
+          value={formData.categoryId}
+          onChange={handleChange}
+            className='outline-none border p-2 rounded'
+         >
+          <option value="" hidden>Select</option>
+         {categories.map((c)=>(
+          <option key={c.id} value={c.id}>{c.name}</option>
+         ))}
+         </select>
+
+         <textarea          
+          placeholder='Description'
+          name='description'
+          value={formData.description}
+          onChange={handleChange}
+            className='outline-none border p-2 rounded'
+         />
+
+         <input           
+          placeholder='Image Url'
+          name='imageUrl'
+          value={formData.imageUrl}
+          onChange={handleChange}
+            className='outline-none border p-2 rounded'
+         />
+          <div className='flex gap-x-2'>
+          <button
+          className='bg-primary text-white py-2 flex-1 rounded disabled:opacity-60'
+          disabled={loading}
+          onClick={handleSubmitAdd}
+          > {loading ? "Saving..":"Add Product"}</button>
+          <button onClick={handleCalcel} disabled={loading} className='bg-white text-primary py-2 border
+           flex-1 rounded disabled:opacity-60' >  Clear  </button>
+          </div>
+      </form>
+     
     </div>
   )
 }

@@ -27,7 +27,7 @@ export class ProductsController {
     }
 
     @Get()
-    @UseGuards(JwtAuthGaurd)
+    // @UseGuards(JwtAuthGaurd)
     getAll(){
         return this.productService.findAll();
     }
@@ -39,7 +39,7 @@ export class ProductsController {
     }
 
     @Get(':id')
-    @UseGuards(JwtAuthGaurd)
+    // @UseGuards(JwtAuthGaurd)
     getOne(@Param("id") id:string){
         return this.productService.findUnique(id);
     }

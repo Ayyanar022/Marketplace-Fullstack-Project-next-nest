@@ -13,7 +13,7 @@ export const useProtectedRoute = ( allowRoles : ("CUSTOMER" |'SELLER'| 'ADMIN')[
         if(!router.isReady)return // wait for router
         if(!authChecked) return // wait for auth
         if(!isAuthenticated){
-            router.replace('/login');
+            router.replace('/products');
             return;
         }
         

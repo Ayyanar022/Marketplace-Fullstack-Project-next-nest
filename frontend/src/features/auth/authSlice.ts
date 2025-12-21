@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthSate, AuthUser } from "./types";
 import { saveAuth ,clearAuth } from "@/utils/authStorage";
-import { stat } from "fs";
 
 
 
@@ -37,8 +36,9 @@ const authSlice = createSlice({
             state.user = null ;
             state.accessToken = null ;
             state.authChecked = true ;
-
+           
             clearAuth()
+           
         },
 
         authRestored(state,action){
