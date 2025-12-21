@@ -1,6 +1,7 @@
 import { getCart, removeCartItem, updateCartItemQty } from "@/api/cartApi";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute"
 import PublicLayout from "@/layouts/PublicLayout";
+import Link from "next/link";
 import { ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -79,7 +80,7 @@ const CartPage = () => {
                         <input type="number" min={1}
                         value={item.quantity} 
                         onChange={(e)=>handleChangeQty(e,item.id)}
-                        className="w-16 border border-black/20 p-1 rounded outline-none"
+                        className="w-16 border text-center border-black/20 p-1 rounded outline-none"
                         />
                         
                         <button className="text-red-500"
@@ -97,6 +98,10 @@ const CartPage = () => {
         <div className="mt-6 text-right">
             <p>Total : ₹{total}</p>
         </div>
+        <Link href="/checkout"
+        className="inline-block mt-8 bg-primary text-white px-6 py-2 rounded"
+        >
+        Proceed to Checkout</Link>
 
 
     </div>

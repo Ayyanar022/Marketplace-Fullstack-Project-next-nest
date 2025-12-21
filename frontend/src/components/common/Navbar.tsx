@@ -37,6 +37,10 @@ const Navbar = () => {
             <button className="text-red-500 hover:underline" onClick={handleLogout}>Logout</button>
             </>
           )}
+
+          {isAuthenticated && user?.role==="CUSTOMER" && (
+            <Link href='/cart' className="px-4 py-2 rounded border text-sm hover:bg-gray-100">Cart</Link>
+          ) }
         </nav>
       </div>      
     </header>

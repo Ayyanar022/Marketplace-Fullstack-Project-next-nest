@@ -11,8 +11,9 @@ export class OrderService {
     //  Stores order items
     //  Clears the cart
     async placeOrder(userId:string){
+        console.log("----id",userId)
         const cart = await this.prisma.cart.findUnique({
-            where:{id:userId},
+            where:{userId:userId},
             include:{
                 cartItems:{
                     include:{product:true}
@@ -20,6 +21,7 @@ export class OrderService {
             }
         })
         
+        console.log("------------cart",cart)
 
          if(!cart || cart.cartItems.length===0) throw new  BadRequestException("Cart is Empty");
 
