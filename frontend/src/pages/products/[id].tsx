@@ -1,8 +1,11 @@
 import { getProductById } from "@/api/productApi";
 import PublicLayout from "@/layouts/PublicLayout";
+import { RootState } from "@/features/store";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { addToCart } from "@/api/cartApi";
 
 
 
@@ -12,6 +15,8 @@ function ProductDetailPage(){
 
     const router = useRouter();
     const {id} = router.query;
+
+    const {isAuthenticated ,user} = useSelector( (state:RootState)=>state.auth);
 
     const [product,setProduct] = useState<any>(null);
     const [loading,setLoading] = useState(true)
@@ -34,6 +39,19 @@ function ProductDetailPage(){
         }
         fetchProduct()
     },[id,router])
+
+    // cart 
+    const handleAddTocart = async ()=>{
+        if(!isAuthenticated)return router.push('/login')
+
+        if(user?.role !=='CUSTOMER') return toast.error("Only Customer can add to cart");
+        try{
+            await addToCart(product.id,1)
+            toast.success("Added to cart")
+        }catch(e){
+            toast.error("Failed to add to cart")
+        }
+    }
 
     if(loading){
         return <p className="text-center mt-10">Loading Product...</p>
@@ -69,6 +87,10 @@ function ProductDetailPage(){
                     Seller : {product.seller.name}
                 </p>
             }
+
+            <button onClick={handleAddTocart}
+            className="bg-primary text-white px-6 py-2 rounded mt-6"
+            >Add to Cart</button>
 
         </div>
     )

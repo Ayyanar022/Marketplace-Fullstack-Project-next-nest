@@ -47,9 +47,11 @@ export class CartService {
         const existingItem = await this.prisma.cartItems.findFirst({
             where:{
                 cartId:cart.id ,
-                productId
+                productId:productId ,
             }
         })
+
+        console.log("exis",existingItem)
 
       
         if(existingItem){
@@ -82,6 +84,9 @@ export class CartService {
 
         // 4. remove item from cart 
         async removeItem(itemId:string){
+            const item = await this.prisma.cartItems.findUnique({where:{id:itemId}})
+            console.log("-----------item",item)
+            if(!item) throw new BadRequestException("Cart Product not found")
             return this.prisma.cartItems.delete({
                 where:{id:itemId}
             })

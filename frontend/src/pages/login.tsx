@@ -38,7 +38,7 @@ const Login = () => {
         // redirect by role
         if(data.user.role==='ADMIN') router.push("/admin");
         else if(data.user.role ==='SELLER') router.push("/seller");
-        else router.push("/user/profile");
+        else router.push("/products");
 
       }catch(e:any){
         console.log(e)

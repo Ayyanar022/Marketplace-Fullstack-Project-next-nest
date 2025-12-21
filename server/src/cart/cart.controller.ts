@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { CartService } from './cart.service';
 import { JwtAuthGaurd } from 'src/auth/guard/jwt-auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { AddToCartDto } from './dto/add-to-cart.dto';
 
 
  @UseGuards(JwtAuthGaurd)
@@ -23,19 +24,19 @@ export class CartController {
     @Post()
     addToCart(
         @CurrentUser() user,
-        @Body() productId:string,
-        @Body() quantity:number
+        @Body() dto:AddToCartDto,        
     ){
-        return this.cartService.addToCart(user.id,productId,quantity)
+        return this.cartService.addToCart(user.id,dto.productId,dto.quantity)
     }
 
     @Patch(':id')
-    updateQuantity(@Param() itemId:string, @Body() quantity:number){
-        return this.cartService.updateCartQty(itemId,quantity)
+    updateQuantity(@Param('id') itemId:string, @Body("quantity") qty:number){
+        return this.cartService.updateCartQty(itemId,qty)
     }
 
     @Delete(':id')
     removeItem(@Param('id') itemId:string){
+        console.log("------",itemId)
         return this.cartService.removeItem(itemId)
     }
 
