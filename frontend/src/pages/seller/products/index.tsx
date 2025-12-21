@@ -1,7 +1,8 @@
-import { getProducts } from '@/api/productApi'
+import { getProducts, getSellerProducts } from '@/api/productApi'
 import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import SellerLayout from '@/layouts/SellerLayout'
 import { Product } from '@/types/product'
+import Link from 'next/link'
 import React, { ReactElement, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -10,14 +11,16 @@ const Products = () => {
   useProtectedRoute(['SELLER'])
 
   const [products,setProducts] = useState<Product[]>([])
-  const [loading,setloading] = useState(false);
+  const [loading,setloading] = useState(true);
 
   useEffect(()=>{
     const   handleGetProduct = async()=> {
       try{
               const data = await getProducts()
+              console.log("data--22",data)
               setProducts(data)
       }catch(e){
+        console.log('er',e)
         toast.error(("Failed to load Products"));        
       }finally{
         setloading(false)
@@ -42,13 +45,13 @@ const Products = () => {
       ):(
         <div>
           {products.map((p)=>(
-            <div key={p.id} className='bg-cardBg border rounded 
+            <Link  href={`/seller/products/${p.id}`} key={p.id} className='bg-cardBg border rounded 
             p-4 flex justify-between items-center'>
               <div>
                 <h2 className='font-medium'>{p.name}</h2>
                 <p className='text-sm text-textSecondary'>₹{p.price}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

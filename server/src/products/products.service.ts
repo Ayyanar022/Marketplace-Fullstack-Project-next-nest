@@ -7,6 +7,20 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductsService {
     constructor(private prisma:PrismaService){}
 
+    // for public and user-----------
+    findAll(){
+        return this.prisma.product.findMany()
+    }
+
+    findUnique(id:string){
+        return this.prisma.product.findUnique({
+            where:{id},
+            include:{images:true , category:true}
+        })
+    }
+
+
+    // for seller and admin
    async craete(dto:CreateProductDto ,user){
         const category = await this.prisma.category.findUnique({
             where:{id:dto.categoryId}
@@ -26,16 +40,25 @@ export class ProductsService {
         return this.prisma.product.create({data:{...dto,sellerId,}})
     }
 
-    findAll(){
-        return this.prisma.product.findMany()
-    }
-
-    findUnique(id:string){
-        return this.prisma.product.findUnique({
-            where:{id},
-            include:{images:true , category:true}
+    async sellerGetAllProdct(id:string){
+        return this.prisma.product.findMany({
+            where:{sellerId:id},
+            include:{seller:true ,images:true , category:true}
         })
     }
+
+    async sellerViewProduct(sellerId:string,productId:string){
+        const product = await this.prisma.product.findUnique({
+            where:{id:productId}
+        })
+
+        if(product?.sellerId ===sellerId){
+            return product
+        }else{
+            throw new BadRequestException("Bad Request")
+        }
+    }
+
 
     update(id:string, dto:UpdateProductDto){
         return this.prisma.product.update({where:{id},data:dto})

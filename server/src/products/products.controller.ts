@@ -18,7 +18,28 @@ export class ProductsController {
         private cloudinary : CloudinaryService
     ){}
 
-   
+    
+// for Public and user ----
+    @Get()
+    getAll(){
+        return this.productService.findAll();
+    }
+
+    @Get(':id')
+    getOne(@Param("id") id:string){
+        return this.productService.findUnique(id);
+    }
+
+    // filter
+    @Get()
+    @UseGuards(JwtAuthGaurd)
+    findAll(@Query() query:FilterProfuctDto){
+        return this.productService.filterAll(query)
+    }
+
+ 
+
+    // seller and admin---------------------
     @UseGuards(JwtAuthGaurd,RoleGuard)
     @Roles('ADMIN',"SELLER")
     @Post()
@@ -26,55 +47,61 @@ export class ProductsController {
         return this.productService.craete(dto,user)
     }
 
-    @Get()
-    // @UseGuards(JwtAuthGaurd)
-    getAll(){
-        return this.productService.findAll();
-    }
-
-    @Get()
+    // view all product -seller
     @UseGuards(JwtAuthGaurd)
-    findAll(@Query() query:FilterProfuctDto){
-        return this.productService.filterAll(query)
+    // @Roles('SELLER','ADMIN')
+    @Get('seller-getproduct')
+    async getSellerProduct(@CurrentUser() user ){
+        console.log("user",user)
+        const data = await this.productService.sellerGetAllProdct(user.id)
+        console.log("data ----",data)
+        return data
     }
 
-    @Get(':id')
-    // @UseGuards(JwtAuthGaurd)
-    getOne(@Param("id") id:string){
-        return this.productService.findUnique(id);
+    // view single product
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+    @Roles("SELLER","ADMIN")
+    @Get('seller-getproduct/:id')
+    vieProduct(@CurrentUser() user ,@Param("id") id:string ){
+        return this.productService.sellerViewProduct(user.id,id)
     }
 
+    //update
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+    @Roles("SELLER",'ADMIN')
     @Patch(':id')
-    @UseGuards(JwtAuthGaurd)
     update(@Param("id") id:string,@Body() dto:UpdateProductDto){
         return this.productService.update(id,dto);
     }
 
+    //delete
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+     @Roles("SELLER",'ADMIN')
     @Delete(':id')
-    @UseGuards(JwtAuthGaurd)
     deleteOne(@Param('id') id:string){
         return this.productService.delete(id)
     }
 
+    // add image
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+     @Roles("SELLER",'ADMIN')
     @Post(':id/upload')
-    @UseGuards(JwtAuthGaurd)
     @UseInterceptors(FileInterceptor('image'))
    async upload(  @Param('id') id: string,  @UploadedFile() file: Express.Multer.File ) {
         const upload  = await this.cloudinary.uploadImage(file.path);
         return this.productService.uploadImage(id,upload.secure_url)
     }   
 
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+    @Roles("SELLER",'ADMIN')
     @Delete('image/:id')
-    @UseGuards(JwtAuthGaurd)
     async deleteImage(@Param('id') id:string){
         const image = await this.productService.deleteImage(id);  // to delete from database
         const publicId = extractPublicId(image.url);
         await this.cloudinary.deleteImage(publicId) // to delete from cloudinary
 
-        return {message:"Image deleted"}
-        
+        return {message:"Image deleted"}        
     }
 
-    // @Get()
 
 }
