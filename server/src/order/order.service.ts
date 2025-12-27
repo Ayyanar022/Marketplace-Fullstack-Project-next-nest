@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { orderStatus } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 
@@ -21,7 +21,6 @@ export class OrderService {
             }
         })
         
-        console.log("------------cart",cart)
 
          if(!cart || cart.cartItems.length===0) throw new  BadRequestException("Cart is Empty");
 
@@ -40,7 +39,8 @@ export class OrderService {
                     create:cart.cartItems.map((item)=>({
                         productId :item.productId,
                         quantity:item.quantity,
-                        price:item.product.price
+                        price:item.product.price,
+                        sellerId:item.product.sellerId,
                     }))
                 },           
             },
@@ -81,6 +81,9 @@ export class OrderService {
             },
             include:{
                 items:{
+                    where:{
+                        product:{sellerId}
+                    },
                     include:{product:true}
                 }
             }
@@ -95,6 +98,56 @@ export class OrderService {
         })
     }
 
+    // update order-item status 
+    async updateOrderItemStatus(
+        sellerId:string,
+        orderItemId:string,
+       status: 'PACKED' | 'SHIPPED'
+    ){
+        const orderItem = await this.prisma.orderItem.findUnique({
+            where:{id:orderItemId}
+        })
+
+        // item vailability check
+        if(!orderItem) throw new NotFoundException("Order Item Not found")
+        
+        // ownership check
+        if(orderItem.sellerId !==sellerId) throw new ForbiddenException();
+
+        // validate 
+        if(
+            (status==='PACKED' && orderItem.status!=='PENDING') ||
+            (status === 'SHIPPED' && orderItem.status !=='PACKED')
+        ){
+            throw new BadRequestException("Invalid Status transition")
+        }
+
+        return this.prisma.orderItem.update({
+            where:{id:orderItemId},
+            data:{status}
+        })
+    }
+
+
+    // cancel-order-item
+    async cancelOrderItem(userId:string,orderItemId:string){
+        console.log("uuu",userId,orderItemId)
+        const orderItem = await this .prisma.orderItem.findFirst({
+            where:{
+                id:orderItemId,
+                order:{userId:userId}
+            }
+        })
+
+        console.log("orderItem-----oo",orderItem)
+
+        if(!orderItem) throw new BadRequestException("Invalid OrderItem");
+
+        return this.prisma.orderItem.update({
+            where :{id:orderItemId},
+            data:{status:"CANCELLED"}
+        })
+    }
 
 
 

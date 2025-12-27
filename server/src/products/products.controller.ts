@@ -25,10 +25,7 @@ export class ProductsController {
         return this.productService.findAll();
     }
 
-    @Get(':id')
-    getOne(@Param("id") id:string){
-        return this.productService.findUnique(id);
-    }
+ 
 
     // filter
     @Get()
@@ -48,13 +45,13 @@ export class ProductsController {
     }
 
     // view all product -seller
-    @UseGuards(JwtAuthGaurd)
-    // @Roles('SELLER','ADMIN')
+    @Roles('SELLER','ADMIN')
+    @UseGuards(JwtAuthGaurd , RoleGuard)
     @Get('seller-getproduct')
     async getSellerProduct(@CurrentUser() user ){
-        console.log("user",user)
+        console.log("user-------------------from getall",user)
         const data = await this.productService.sellerGetAllProdct(user.id)
-        console.log("data ----",data)
+        console.log("data ---selelr -------",data)
         return data
     }
 
@@ -62,7 +59,7 @@ export class ProductsController {
     @UseGuards(JwtAuthGaurd,RoleGuard)
     @Roles("SELLER","ADMIN")
     @Get('seller-getproduct/:id')
-    vieProduct(@CurrentUser() user ,@Param("id") id:string ){
+    viewProduct(@CurrentUser() user ,@Param("id") id:string ){
         return this.productService.sellerViewProduct(user.id,id)
     }
 
@@ -103,5 +100,12 @@ export class ProductsController {
         return {message:"Image deleted"}        
     }
 
+
+
+    //  
+    @Get(':id')
+    getOne(@Param("id") id:string){
+        return this.productService.findUnique(id);
+    }
 
 }

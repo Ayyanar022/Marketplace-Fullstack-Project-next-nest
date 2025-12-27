@@ -2,7 +2,7 @@ import { Product } from "@/types/product";
 import api from "./axios";
 
 
-
+// for seller
 export const getProducts = async():Promise<Product[]>=>{
     const res = await api.get('/products');    
     return res.data
@@ -32,7 +32,7 @@ export const createProduct = async(
 }
 
 
-// fetch all product
+// seller product
 export const getSellerProducts = async():Promise<Product[]>=>{
     const res = await api.get('/products/seller-getproduct')
     console.log("res----234",res)

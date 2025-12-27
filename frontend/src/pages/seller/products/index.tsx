@@ -16,7 +16,7 @@ const Products = () => {
   useEffect(()=>{
     const   handleGetProduct = async()=> {
       try{
-              const data = await getProducts()
+              const data = await getSellerProducts()
               console.log("data--22",data)
               setProducts(data)
       }catch(e){

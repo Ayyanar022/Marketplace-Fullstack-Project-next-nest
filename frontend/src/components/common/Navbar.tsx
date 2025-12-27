@@ -33,7 +33,7 @@ const Navbar = () => {
             </>
           ):(
             <>
-            <span className='text-textSecondary text-base capitalize'> {user?.name}</span>
+            <Link href={'/user/orders'} className='text-textSecondary text-base capitalize'> {user?.name}</Link>
             <button className="text-red-500 hover:underline" onClick={handleLogout}>Logout</button>
             </>
           )}

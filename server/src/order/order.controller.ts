@@ -5,6 +5,7 @@ import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { RoleGuard } from 'src/auth/guard/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { orderStatus } from '@prisma/client';
+import { UpdateOrderItemStatusDto } from './dto/update-order-item-status.dto';
 
 @UseGuards(JwtAuthGaurd)
 @Controller('order')
@@ -16,7 +17,7 @@ export class OrderController {
         return this.orderService.placeOrder(user.id);
     }
 
-    @Get()
+    @Get('my')
     getUserOrders(@CurrentUser()user){
         return this.orderService.getUserOrders(user.id)
     }
@@ -24,8 +25,11 @@ export class OrderController {
     @UseGuards(RoleGuard)
     @Roles("SELLER",'ADMIN')
     @Get('seller')
-    getSellerOrder(@CurrentUser() user){
-        return this.orderService.getSellerOredrs(user.id)
+   async getSellerOrder(@CurrentUser() user){
+        console.log("seller order --- ",user)
+        const res = await this.orderService.getSellerOredrs(user.id)
+        console.log("return--res",res)
+        return res
     }
 
     @UseGuards(RoleGuard)
@@ -34,4 +38,28 @@ export class OrderController {
     updateSattus(@Param('id') orderId:string , @Body('status')status:orderStatus){
             return this.orderService.updateStatus(orderId,status)
     }
+
+    //update orderitem status - seller
+    @Patch('seller/order-items/:id/status')
+    @Roles("SELLER")
+    @UseGuards(RoleGuard,JwtAuthGaurd)
+    updateItem_order_Status(
+         @CurrentUser('id') user,
+         @Param("id")id:string,
+         @Body()dto:UpdateOrderItemStatusDto
+    ){
+        console.log("sellerId,id,dto.status-----pp",user.id,id,dto.status)
+        return this.orderService.updateOrderItemStatus(user.id,id,dto.status)
+    }
+
+    // cancel orderitem -user
+    @Patch('user/order-items/:id/cancel-order')
+    @Roles("CUSTOMER")
+    @UseGuards(RoleGuard,JwtAuthGaurd)
+    cancelOrederItem(@CurrentUser()user ,@Param('id')id:string){
+        console.log("uerid-----id",user.id,id)
+        return this.orderService.cancelOrderItem(user.id,id)
+    }
+
+
 }

@@ -15,6 +15,7 @@ function ProductsPage(){
         const fetchProducts = async ()=>{
             try{
                 const data = await getProducts()
+                console.log("data----product",data)
                 setProducts(data)
 
             }catch(e){

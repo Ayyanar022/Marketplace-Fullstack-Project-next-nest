@@ -23,11 +23,13 @@ export class AuthService {
     }
 
     async login(dto:LoginDto){
+        console.log('dto-------', dto)
         const user = await this.userService.findByEmail(dto.email);
-        if(!user) return new BadRequestException("Invalid credentials");
+        console.log("user----",user)
+        if(!user) throw new BadRequestException("Invalid credentials");
 
         const isMatch = await bcrypt.compare(dto.password,user.password)
-        if(!isMatch) return new BadRequestException("Invalid credentials")
+        if(!isMatch) throw new BadRequestException("Invalid credentials")
         
         const accessToken = this.createToken(user.id,user.email,user.role)
         
