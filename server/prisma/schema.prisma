@@ -48,6 +48,7 @@ model Product{
   description String?
   categoryId  String
   sellerId    String
+  stock       Int       @default(0)
   createdAt   DateTime @default(now())
 
   category  Category  @relation(fields:[categoryId], references:[id])

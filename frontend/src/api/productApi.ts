@@ -24,6 +24,7 @@ export const createProduct = async(
         price:number;
         // imageUrl:string;
         categoryId:string;
+        stock:number;
     }
 ):Promise<Product>=>{
 
@@ -53,6 +54,7 @@ export const updateProduct = async(id:string,    payload:Partial<{
         price:number;
         // imageUrl:string;
         categoryId:string;
+        stock:number;
     }>
 ):Promise<Product>=>{
     const res = await api.patch(`/products/${id}`,payload);

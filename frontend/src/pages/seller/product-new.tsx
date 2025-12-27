@@ -18,7 +18,7 @@ const ProductNew = () => {
     price:"",
     imageUrl:"",
     categoryId:"",
-
+    stock:'',
   }
 
 
@@ -58,10 +58,10 @@ const ProductNew = () => {
 
   const handleSubmitAdd = async (e:React.FormEvent)=>{
     e.preventDefault();
-    console.log(formData)
+    console.log("formData",formData)
 
     if(!formData.categoryId || !formData.name || !formData.price
-      ||!formData.description 
+      ||!formData.description ||!formData.stock
     )return toast.error("Please File All Fields");
 
     setLoadng(true);
@@ -70,6 +70,7 @@ const ProductNew = () => {
        description:formData.description ,
       categoryId: formData.categoryId,
       price:+formData.price,
+      stock:+formData.stock,
       // imageUrl :formData.imageUrl,
       })
 
@@ -99,13 +100,22 @@ const ProductNew = () => {
         className='outline-none border p-2 rounded'
         placeholder='Product Name' />
 
+<div className='flex gap-x-7'>
         <input type="number"
         name='price'
         value={formData.price}
         onChange={handleChange}
         placeholder='Price'
-          className='outline-none border p-2 rounded'
+          className='outline-none border p-2 rounded flex-1'
          />
+             <input type="number"
+        name='stock'
+        value={formData.stock}
+        onChange={handleChange}
+        placeholder='Stock'
+          className='outline-none border p-2 rounded flex-1'
+         />
+         </div>
 
          <select name="categoryId"
           value={formData.categoryId}
@@ -133,14 +143,14 @@ const ProductNew = () => {
           onChange={handleChange}
             className='outline-none border p-2 rounded'
          />
-          <div className='flex gap-x-2'>
+          <div className='flex gap-x-7'>
           <button
-          className='bg-primary text-white py-2 flex-1 rounded disabled:opacity-60'
+          className='bg-primary text-white py-2 flex-1 rounded disabled:opacity-60 '
           disabled={loading}
           onClick={handleSubmitAdd}
           > {loading ? "Saving..":"Add Product"}</button>
           <button onClick={handleCalcel} disabled={loading} className='bg-white text-primary py-2 border
-           flex-1 rounded disabled:opacity-60' >  Clear  </button>
+           flex-1 rounded disabled:opacity-60 hover:shadow-md transition' >  Clear  </button>
           </div>
       </form>
      

@@ -9,4 +9,5 @@ export interface Product{
     sellerId:string;
     imageUrl?:string; // simplified for now
     createdAt:string;
+    stock:number;
 }

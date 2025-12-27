@@ -40,16 +40,17 @@ function SellerProductDetailPage(){
     const handleSave = async ()=>{
         setSaving(true);
         try{
-             await updateProduct(product.id ,{
+           const res =   await updateProduct(product.id ,{
                 name:product.name,
                 description:product.description,
-                price:+product.price
+                price:+product.price,
+                stock:product.stock,
             })
+            console.log("res---kk",res)
             toast.success("Prodcut Updated")
              router.push('/seller/products')
-        }catch(e){
-            console.log(e)
-            toast.error("Filed Product update");
+        }catch(e:any){            
+            toast.error( "Filed Product update");
         }finally{
             setSaving(false)
         }
@@ -94,6 +95,11 @@ function SellerProductDetailPage(){
                 className="outline-none border p-2 rounded"
                 value={product.price}
                 onChange={(e)=>setProduct({...product,price:e.target.value})}
+                />
+                <input type="number" 
+                className="outline-none border p-2 rounded"
+                value={product.stock}
+                onChange={(e)=>setProduct({...product,stock:e.target.value})}
                 />
 
                <div className="flex gap-3 mt-3">
