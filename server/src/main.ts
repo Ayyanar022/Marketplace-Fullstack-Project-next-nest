@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { GlobalHttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,7 +23,10 @@ async function bootstrap() {
     )
 
     // for global error 
-    app.useGlobalFilters(new GlobalHttpExceptionFilter())
+    app.useGlobalFilters(
+      new GlobalHttpExceptionFilter(),
+      new PrismaExceptionFilter().
+    )
 
     // interceptor - Response 
     app.useGlobalInterceptors(new ResponseInterceptor());
