@@ -11,7 +11,7 @@ export class OrderService {
     //  Stores order items
     //  Clears the cart
     async placeOrder(userId:string){
-        console.log("----id",userId)
+        // console.log("----id",userId)
         const cart = await this.prisma.cart.findUnique({
             where:{userId:userId},
             include:{
@@ -29,30 +29,44 @@ export class OrderService {
             return  sum+ item.quantity* item.product.price;
          },0)
 
+         const order = await this.prisma.$transaction(async(tx)=>{
 
-         // create order
-         const order = await  this.prisma.order.create({
-            data:{
-                userId,
-                total,
-                items:{
-                    create:cart.cartItems.map((item)=>({
-                        productId :item.productId,
-                        quantity:item.quantity,
-                        price:item.product.price,
-                        sellerId:item.product.sellerId,
-                    }))
-                },           
-            },
-            include:{items:true}
-         })
+            for(const item of cart.cartItems){     
 
-         // clear cart
-         await this.prisma.cartItems.deleteMany({
-            where:{cartId:cart.id},
-         })
+                if(item.quantity > item.product.stock ) throw new BadRequestException("Stock not avilable")
+                
+                await tx.product.update({  
+                where:{id:item.product.id},
+                data:{stock :{decrement:item.quantity}}
+            })
 
+             }                           
+
+              // create order
+            const order = await  tx.order.create({
+                    data:{
+                        userId,
+                        total,
+                        items:{
+                            create:cart.cartItems.map((item)=>({
+                                productId :item.productId,
+                                quantity:item.quantity,
+                                price:item.product.price,
+                                sellerId:item.product.sellerId,
+                            }))
+                        },           
+                    },
+                    include:{items:true}
+                })
+
+                // clear cart
+                await tx.cartItems.deleteMany({
+                    where:{cartId:cart.id},
+                })
          
+              return order;         
+         })
+
     }
 
 
@@ -131,22 +145,39 @@ export class OrderService {
 
     // cancel-order-item
     async cancelOrderItem(userId:string,orderItemId:string){
-        console.log("uuu",userId,orderItemId)
-        const orderItem = await this .prisma.orderItem.findFirst({
-            where:{
-                id:orderItemId,
-                order:{userId:userId}
-            }
+
+        await this.prisma.$transaction(async(tx)=>{
+
+               const orderItem = await tx.orderItem.findFirst({
+                            where:{
+                                id:orderItemId,
+                                order:{userId:userId}
+                            }
+                     })
+            
+                if(!orderItem || orderItem.status !== "PENDING"){
+                     throw new BadRequestException('Wrong input , Cannot cancel');
+                }
+
+                    await tx.orderItem.update({
+                        where :{id:orderItemId},
+                        data:{status:"CANCELLED"}
+                    })
+
+                     await tx.product.update({
+                        where:{id:orderItem.productId},
+                        data:{
+                            stock:{increment : orderItem.quantity}
+                        }
+                    })
         })
+     
 
-        console.log("orderItem-----oo",orderItem)
 
-        if(!orderItem) throw new BadRequestException("Invalid OrderItem");
+      
+           
 
-        return this.prisma.orderItem.update({
-            where :{id:orderItemId},
-            data:{status:"CANCELLED"}
-        })
+    
     }
 
 
