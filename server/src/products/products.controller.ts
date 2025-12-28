@@ -108,4 +108,33 @@ export class ProductsController {
         return this.productService.findUnique(id);
     }
 
+    // Admin - product isactive -status 
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+    @Roles("ADMIN")
+    @Patch('admin/product/:id/toggle')
+    async toggleProduct(@Param('id')id:string){
+        return this.productService.toggleProductActive(id)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

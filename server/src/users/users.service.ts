@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { SignUpDto } from 'src/auth/dto/signup.dto';
 
@@ -23,4 +23,38 @@ export class UsersService {
     findById(id:string){
         return this.prisma.user.findUnique({where:{id}})
     }
+
+
+    //admin -> seller toggle
+    async toggleSeller(sellerId :string){
+        const seller = await this.prisma.user.findUnique({where:{
+            id:sellerId
+        }})
+
+        if(!seller) throw new NotFoundException()
+        
+        return this.prisma.user.update({
+            where:{id:sellerId},
+            data:{isActive:!seller.isActive}
+        })
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

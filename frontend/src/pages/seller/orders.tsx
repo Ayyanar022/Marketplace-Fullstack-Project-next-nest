@@ -40,41 +40,79 @@ const fetchData =()=>{
   if(loading) return <p>Loading orders...</p>
 
   return (
-    <div>
+    <div className='max-w-4xl mx-auto p-4'>
       <h1 className='text-2xl font-semibold mb-6'>Orders to Fulfill</h1>
 
       {orders.length===0?(
-        <p>No order yet</p>
+        <p className='text-gray-500'> No order yet</p>
             ):(
-              <div className='space-y-4'>
+              <div className='space-y-6'>
               {orders.map(order => (
-        <div key={order.id} className="border rounded p-4 ">
-          <p><b>Order:</b> {order.id}</p>
-          <p><b>Status:</b> {order.status}</p>
+        <div key={order.id} className="border rounded-lg p-4 bg-white shadow-sm ">
+         
+         {/* {order headder} */}
+         <div className='mb-4'>
+                <p className='text-sm text-gray-500'>Order ID</p>
+                <p className='font-medium break-all'>{order.id}</p>
+         </div>
+         
+          {/* <p><b>Status:</b> {order.status}</p> */}
 
+          {/* Order Items */}
+          <div className='space-y-4'>
           {order.items.map((item:any) => (
-            <div key={item.id} className="border p-4 rounded bg-gray-100">
-              <p><b>Product:</b> {item.product.name}</p>
-              <p><b>Qty:</b> {item.quantity}</p>
-              <p><b>Item Total:</b> ₹{item.price * item.quantity}</p>
-              <p><b>Status: </b>{item.status}</p>
+            <div key={item.id} className="flex justify-between items-start border rounded-lg p-4 bg-gray-50">
+            
+            {/* Left */}
+            <div className='space-y-1'>
+              <p className='font-medium'>{item.product.name}</p>
+              <p className='text-sm text-gray-600'> Qty:{item.quantity}</p>
+              <p className='text-sm text-gray-600'>Total: ₹{item.price * item.quantity}</p>
 
-            {/* update status */}
+            {/* Status batch */}
+              <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full 
+                ${
+                  item.status ==='PENDING'
+                  ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
+                  :item.status ==='PACKED'
+                  ? 'bg-blue-100 text-blue-700 border border-blue-300'
+                  :item.status === 'SHIPPED'
+                  ? 'bg-green-100 text-green-700 border border-green-300'
+                  :'bg-gray-100 text-gray-700 border border-gray-300'
+                }
+                
+                `}>{item.status}</span>
+
+            </div>
+
+
+            {/* Right side - Action */}
+
+             <div>
+                
             {item.status==='PENDING' && (
-              <button className='' onClick={()=>handleStatusUpdate(item.id,'PACKED')}>
+              <button className=' px-4 py-1.5 text-sm rounded-md 
+              bg-blue-600 text-white hover:bg-blue-700'
+               onClick={()=>handleStatusUpdate(item.id,'PACKED')}>
                  Mark as Packed
               </button>
             )}
 
-            { item.status==='PACKED' && (
-              <button className='' onClick={()=>handleStatusUpdate(item.id,'SHIPPED')}>
+             { item.status==='PACKED' && (
+              <button className='px-4 py-1.5 text-sm rounded-md 
+              bg-green-600 text-white hover:bg-green-700'
+              onClick={()=>handleStatusUpdate(item.id,'SHIPPED')}>
                  Mark as Shipped
               </button>
-            )
+            ) }
+              </div>         
 
-            }
+        
+
+           
             </div>
           ))}
+          </div>
         </div>
       ))}
         </div>

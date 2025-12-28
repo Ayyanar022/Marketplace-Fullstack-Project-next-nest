@@ -26,6 +26,7 @@ model User {
   email               String    @unique
   password            String
    role      Role     @default(CUSTOMER)
+   isActive           Boolean   @default(true)
   createdAt           DateTime      @default(now())
 
   products Product[] @relation("sellerProducts")  // seller owned products
@@ -49,6 +50,7 @@ model Product{
   categoryId  String
   sellerId    String
   stock       Int       @default(0)
+  isActive    Boolean   @default(true)
   createdAt   DateTime @default(now())
 
   category  Category  @relation(fields:[categoryId], references:[id])

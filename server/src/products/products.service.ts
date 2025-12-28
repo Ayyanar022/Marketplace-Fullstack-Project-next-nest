@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -159,6 +159,27 @@ export class ProductsService {
             totalPages:Math.ceil(total /limit),
         };
     }
+
+
+    // ADIN - >Enable disable Product 
+
+    async toggleProductActive(productId:string){
+        const product = await this.prisma.product.findUnique({
+            where:{id:productId}
+        })
+
+        if(!product) throw new NotFoundException();
+
+        return this.prisma.product.update({
+            where:{id:productId},
+            data:{
+                isActive : !product.isActive
+            },
+        })
+
+    }
+
+    
 
 
 
