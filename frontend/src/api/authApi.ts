@@ -8,7 +8,7 @@ export const loginApi = async(email:string ,password:string)=>{
         email,
         password,
     })
-    return res.data
+    return res.data.data
 }
 
 
@@ -23,5 +23,5 @@ export const signupApi = async(
         name
     })
 
-    return res.data
+    return res.data.data
 }

@@ -8,13 +8,13 @@ export const addToCart = async (
 )=>{
     console.log("")
     const res = await api.post('/cart',{productId,quantity});
-    return res.data;
+    return res.data.data;
 }
 
 // get all
 export const getCart = async ()=>{
     const res = await api.get('/cart')
-    return res.data
+    return res.data.data;
 }
 
 // update
@@ -24,7 +24,7 @@ export const updateCartItemQty = async(
 )=>{
     console.log(" cart ",quantity)
     const res = await api.patch(`/cart/${cartItemId}`,{quantity});
-    return res.data;
+    return res.data.data;
 }
 
 // delete 

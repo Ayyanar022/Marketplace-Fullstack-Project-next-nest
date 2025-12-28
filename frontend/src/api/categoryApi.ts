@@ -5,10 +5,10 @@ import api from "./axios";
 
 export const getCategories = async ():Promise<Category[]>=>{
     const res = await api.get("/categories");
-    return res.data
+    return res.data.data;
 }
 
 export const createCategory = async (name:string):Promise<Category>=>{
     const res = await api.post("/categories",{name})
-    return res.data;
+    return res.data.data;
 }
