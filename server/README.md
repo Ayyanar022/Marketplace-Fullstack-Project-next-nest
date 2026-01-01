@@ -100,4 +100,11 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 
 <!-- ----------------------------------------------------------------- -->
-validation  --> npm install class-validator class-transformer
+1.validation  --> npm install class-validator ass-transformer
+
+
+2.Rate liminiting (nest js provide this) - >npm install @nestjs/throttler
+
+  1.@Throttle(5, 60) 
+  @SkipThrottle()
+

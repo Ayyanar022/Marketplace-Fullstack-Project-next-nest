@@ -4,6 +4,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalHttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
+import { LoggingInterCeptor } from './common/interceptors/logging.interceptor';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,6 +15,8 @@ async function bootstrap() {
     origin:'http://localhost:3000',
     credential :true,
   })
+
+  app.use(helmet()); // adds safe HTTP headers so browsers can’t do unsafe things
 
   // for vaidation dto data
   app.useGlobalPipes(
@@ -25,11 +30,18 @@ async function bootstrap() {
     // for global error 
     app.useGlobalFilters(
       new GlobalHttpExceptionFilter(),
-      new PrismaExceptionFilter().
+      new PrismaExceptionFilter(),
     )
 
     // interceptor - Response 
-    app.useGlobalInterceptors(new ResponseInterceptor());
+    app.useGlobalInterceptors(
+      new ResponseInterceptor(),
+      new LoggingInterCeptor()
+                      
+  );
+
+  // goobal GUARD
+  app.useGlobalGuards(app.get(ThrottlerGuard)  )  //-> its for rate limiting
 
 
 
