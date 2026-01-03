@@ -10,8 +10,23 @@ export class OrderService {
     //  Creates order
     //  Stores order items
     //  Clears the cart
-    async placeOrder(userId:string){
-        // console.log("----id",userId)
+    async placeOrder(userId:string,key:string){
+      
+        //-----------idempotency thing-----------------------
+        if(!key) {
+            throw new BadRequestException("IdemPtency key requird")
+        }
+
+        //1. check if alredy processed  this request IDEMPOTENCY
+        const existing = await this.prisma.idempotencyKey.findUnique({
+            where:{key}
+        })
+
+        if(existing){
+            return existing.response ; // return old result
+        }
+//---------------------------------------------------------------------
+        // actual logic for place order
         const cart = await this.prisma.cart.findUnique({
             where:{userId:userId},
             include:{
@@ -30,6 +45,15 @@ export class OrderService {
          },0)
 
          const order = await this.prisma.$transaction(async(tx)=>{
+
+            // create first time request idempotency key ( this prevents duplicats )
+            await this.prisma.idempotencyKey.create({
+                data:{
+                    key,
+                    userId,
+                    endpoint:'/order'
+                }
+            })
 
             for(const item of cart.cartItems){     
 
@@ -62,6 +86,12 @@ export class OrderService {
                 // clear cart
                 await tx.cartItems.deleteMany({
                     where:{cartId:cart.id},
+                })
+
+                // store idempotency 
+                await tx.idempotencyKey.update({
+                    where :{key},
+                    data:{response:order}
                 })
          
               return order;         

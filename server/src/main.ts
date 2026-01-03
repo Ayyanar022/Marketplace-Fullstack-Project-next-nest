@@ -41,7 +41,7 @@ async function bootstrap() {
   );
 
   // goobal GUARD
-  app.useGlobalGuards(app.get(ThrottlerGuard)  )  //-> its for rate limiting
+  // app.useGlobalGuards(app.get(ThrottlerGuard)  )  //-> its for rate limiting
 
 
 

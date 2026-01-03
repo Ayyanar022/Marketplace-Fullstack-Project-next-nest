@@ -7,13 +7,16 @@ import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [ ConfigModule.forRoot({isGlobal:true}),
     AuthModule, UsersModule ,
      PrismaModule, CategoriesModule,
       ProductsModule, CartModule, OrderModule,
+    
+      // for rate limiting--------------
       ThrottlerModule.forRoot({
         throttlers:[
           {
@@ -23,5 +26,13 @@ import { ThrottlerModule } from '@nestjs/throttler';
         ]
       })
     ],
+
+    providers:[
+      { // for rate limiting
+        provide :APP_GUARD,
+        useClass:ThrottlerGuard,
+      }
+
+    ]
 })
 export class AppModule {}

@@ -133,3 +133,16 @@ enum OrderItemStatus{
   SHIPPED
   CANCELLED
 }
+
+
+
+model IdempotencyKey{
+  id      String    @id @default(uuid())
+  key     String    @unique
+  userId  String 
+  endpoint  String
+  response  Json?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}

@@ -1,8 +1,15 @@
 import api from "./axios"
+import {v4 as uuid} from 'uuid';
+
+const orderKey = uuid() // idempotency key
 
 
 export const placeOrder = async ()=>{
-    const res = await api.post('/order');
+    const res = await api.post('/order',{},{
+        headers:{
+            'Idempotency-Key':orderKey,
+        }
+    });
     // console.log("orders -----",res)
     return res.data.data;
 }

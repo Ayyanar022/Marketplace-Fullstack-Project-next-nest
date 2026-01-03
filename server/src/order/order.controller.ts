@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGaurd } from 'src/auth/guard/jwt-auth.guard';
 import { OrderService } from './order.service';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
@@ -12,9 +12,13 @@ import { UpdateOrderItemStatusDto } from './dto/update-order-item-status.dto';
 export class OrderController {
     constructor(private orderService :OrderService){}
 
+
     @Post()
-    placeOrder(@CurrentUser() user){
-        return this.orderService.placeOrder(user.id);
+    @UseGuards(RoleGuard)
+    @Roles('CUSTOMER')
+    placeOrder(@Req() req:Request , @CurrentUser() user){
+        const key = req.headers['idempotency-key'] as string ;
+        return this.orderService.placeOrder(user.id ,key);
     }
 
     @Get('my')
