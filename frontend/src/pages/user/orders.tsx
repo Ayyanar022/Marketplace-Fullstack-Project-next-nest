@@ -74,7 +74,7 @@ const Orders = () => {
 
         <div className='space-y-6'>
           {
-            orders.map((order:any)=>(
+            orders?.map((order:any)=>(
               <div key={order.id} className='border rounded-lg p-4 bg-background'>
 
                 {/* Order header (optional , subtle) */}

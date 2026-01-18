@@ -6,6 +6,7 @@ import { getCategories } from '@/api/categoryApi'
 import toast from 'react-hot-toast'
 import { createProduct } from '@/api/productApi'
 import { useRouter } from 'next/router'
+import ProductImageUpload from '@/components/products/ProductImageUpload'
 
 const ProductNew = () => {
 
@@ -16,7 +17,6 @@ const ProductNew = () => {
     name:"",
     description:"",
     price:"",
-    imageUrl:"",
     categoryId:"",
     stock:'',
   }
@@ -25,12 +25,12 @@ const ProductNew = () => {
   const [categories ,setCategories] = useState<Category[]>([]);
   const [formData,setFormData] = useState(formInitialState)
   const [loading,setLoadng] = useState(false);
+  const [imageUrl,seImageUrl] = useState<string[]>([])
 
 
   const handleChange = (e:any)=>{
     const {value,name} = e.target;
     setFormData((prev)=>{
-
       return(
         {
           ...prev,
@@ -66,13 +66,16 @@ const ProductNew = () => {
 
     setLoadng(true);
     try{
-     const res = await createProduct({name:formData.name ,
-       description:formData.description ,
+     const res = await createProduct({
+      name:formData.name ,
+      description:formData.description ,
       categoryId: formData.categoryId,
       price:+formData.price,
       stock:+formData.stock,
-      // imageUrl :formData.imageUrl,
+      imageUrl :imageUrl,
       })
+
+      console.log("image url ",imageUrl)
 
       console.log("res---",res)
 
@@ -136,13 +139,23 @@ const ProductNew = () => {
             className='outline-none border p-2 rounded'
          />
 
-         <input           
+         {/* <input           
           placeholder='Image Url'
           name='imageUrl'
           value={formData.imageUrl}
           onChange={handleChange}
             className='outline-none border p-2 rounded'
-         />
+         /> */}
+
+         <div className='flex flex-wrap overflow-hidden  gap-3'>
+          {imageUrl && imageUrl.map((img)=>(
+            <div className='h-28  w-auto'>
+              <img src={img} alt="" className='w-full h-full object-cover' />
+            </div>
+          ))}
+
+         </div>
+         
           <div className='flex gap-x-7'>
           <button
           className='bg-primary text-white py-2 flex-1 rounded disabled:opacity-60 '
@@ -153,6 +166,11 @@ const ProductNew = () => {
            flex-1 rounded disabled:opacity-60 hover:shadow-md transition' >  Clear  </button>
           </div>
       </form>
+
+      <div className='py-5'>
+        <ProductImageUpload onUploaded={(url)=>seImageUrl(p=>[...p,url])} />
+      </div>
+
      
     </div>
   )

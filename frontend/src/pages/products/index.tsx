@@ -31,6 +31,7 @@ function ProductsPage(){
         return  <p className="text-center mt-10">Loading Products...</p>
     }
 
+    console.log("products--",products)
 
     return(
         <div className="max-w-6xl mx-auto">
@@ -44,8 +45,8 @@ function ProductsPage(){
                     href={`/products/${product.id}`}
                     className="block bg-cardBg border rounded p-4 hover:shadow "
                     >
-                        <div className="h-40 bg-gray-100 rounded mb-3 flex items-center justify-center text-sm text-gray-400">
-                            Image
+                        <div className="max-h-40  overflow-hidden  bg-gray-100 rounded mb-3 flex items-center justify-center text-sm text-gray-400">
+                            <img className=" h-full object-contain"  src={product?.images[0]?.url} alt="" />
                         </div>
 
                         <h2 className="font-medium">{product.name}</h2>

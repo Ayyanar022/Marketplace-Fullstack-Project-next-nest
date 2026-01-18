@@ -25,4 +25,8 @@ export class CreateProductDto{
     @IsNumber()
     @Min(1)
     stock:number
+
+    @IsString({each:true})
+    @IsOptional()
+    imageUrl?:string[]
 }

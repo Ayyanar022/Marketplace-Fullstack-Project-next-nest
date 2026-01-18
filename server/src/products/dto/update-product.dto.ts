@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { IsNumber, IsOptional, isString, IsString, Min } from "class-validator";
 
 export class UpdateProductDto{
     @IsOptional()
@@ -25,5 +25,9 @@ export class UpdateProductDto{
     @IsNumber()
     @Min(1)
     stock?:number;
+
+    @IsString({each:true})
+    @IsOptional()
+    imageUrl?:string[]
     
 }

@@ -49,9 +49,7 @@ export class ProductsController {
     @UseGuards(JwtAuthGaurd , RoleGuard)
     @Get('seller-getproduct')
     async getSellerProduct(@CurrentUser() user ){
-        console.log("user-------------------from getall",user)
         const data = await this.productService.sellerGetAllProdct(user.id)
-        console.log("data ---selelr -------",data)
         return data
     }
 
@@ -79,13 +77,23 @@ export class ProductsController {
         return this.productService.delete(id)
     }
 
-    // add image
+    // add image in add product 
+    @UseGuards(JwtAuthGaurd,RoleGuard)
+    @Roles('SELLER',"ADMIN")
+    @Post('add-image-upload')
+    @UseInterceptors(FileInterceptor('image'))
+    async addImage(@UploadedFile() file:Express.Multer.File){
+        // console.log("image ---",file)
+        return await this.cloudinary.uploadImage(file.buffer);
+    }
+
+    // add image in update
     @UseGuards(JwtAuthGaurd,RoleGuard)
      @Roles("SELLER",'ADMIN')
-    @Post(':id/upload')
+    @Post(':id/-update-upload-image')
     @UseInterceptors(FileInterceptor('image'))
    async upload(  @Param('id') id: string,  @UploadedFile() file: Express.Multer.File ) {
-        const upload  = await this.cloudinary.uploadImage(file.path);
+        const upload  = await this.cloudinary.uploadImage(file.buffer);
         return this.productService.uploadImage(id,upload.secure_url)
     }   
 

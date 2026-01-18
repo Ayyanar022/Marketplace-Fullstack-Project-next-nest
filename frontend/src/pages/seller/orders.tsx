@@ -47,7 +47,7 @@ const fetchData =()=>{
         <p className='text-gray-500'> No order yet</p>
             ):(
               <div className='space-y-6'>
-              {orders.map(order => (
+              {orders?.map(order => (
         <div key={order.id} className="border rounded-lg p-4 bg-white shadow-sm ">
          
          {/* {order headder} */}

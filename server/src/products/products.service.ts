@@ -9,7 +9,7 @@ export class ProductsService {
 
     // for public and user-----------
     findAll(){
-        return this.prisma.product.findMany()
+        return this.prisma.product.findMany({include:{images:true}})
     }
 
     findUnique(id:string){
@@ -28,28 +28,50 @@ export class ProductsService {
 
         let sellerId  = user.id ;  // seller default 
 
-        // if anim - >seller must be inside dto
-        if(user.role==='ADMIN'){
-            if(!dto.sellerId)throw new BadRequestException("Admin must provide seller id")
+        // // if admin - >seller must be inside dto
+        // if(user.role==='ADMIN'){
+        //     if(!dto.sellerId)throw new BadRequestException("Admin must provide seller id")
             
-            sellerId = dto.sellerId;
-        }
+        //     sellerId = dto.sellerId;
+        // }
+
+        console.log("dto in create product",dto)
 
 
         if(!category) throw new BadRequestException("Category not found")        
-        return this.prisma.product.create({data:{...dto,sellerId,}})
+        return this.prisma.product.create({
+                data:{
+                    name:dto.name,
+                    price:dto.price,
+                    description:dto.description,
+                    categoryId:dto.categoryId,
+                    sellerId,
+                    stock:dto.stock,    
+                   
+                ...(dto.imageUrl && {
+                    images:{
+                        createMany:{
+                            data:dto.imageUrl.map(url=>({url}))
+                        }
+                    }      
+                })
+                           
+                }
+            })
     }
 
     async sellerGetAllProdct(id:string){
         return this.prisma.product.findMany({
             where:{sellerId:id},
-            include:{seller:true ,images:true , category:true}
+            
+            // include:{seller:true ,images:true , category:true}
         })
     }
 
     async sellerViewProduct(sellerId:string,productId:string){
         const product = await this.prisma.product.findUnique({
-            where:{id:productId}
+            where:{id:productId},
+            include:{images:true,category:true},
         })
 
         if(product?.sellerId ===sellerId){
@@ -61,7 +83,24 @@ export class ProductsService {
 
 
     update(id:string, dto:UpdateProductDto){
-        return this.prisma.product.update({where:{id},data:dto})
+        const {imageUrl,...res} = dto
+        return this.prisma.product.update(
+            {
+                where:{id},
+                data:{
+                    ...res,
+                    ...(imageUrl && {
+                        images :{
+                            createMany:{
+                                data:imageUrl.map(url=>({url}))
+                            }
+                        }
+                    })
+                },
+                
+
+            }
+        )
     }
 
     delete(id:string){
@@ -71,7 +110,8 @@ export class ProductsService {
     uploadImage(productId :string , imageUrl :string){
         return this.prisma.images.create({
             data:{
-                url:imageUrl,productId
+                url:imageUrl,
+                productId
             }
         })
     }

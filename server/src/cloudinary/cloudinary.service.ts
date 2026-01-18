@@ -1,5 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { v2 as cloudinary } from 'cloudinary';
+import { rejects } from "assert";
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
+import { resolve } from "path";
+import { Readable } from "stream";
 
 
 
@@ -13,13 +16,46 @@ export class CloudinaryService{
         })
     }
 
-    async uploadImage(filePath : string){
-        return await cloudinary.uploader.upload(filePath,{
-            folder: 'marketplace/products',
-        })
-    }
+//     uploadImage(buffer: Buffer) {
+//   return new Promise((resolve, reject) => {
+//     const uploadStream = cloudinary.uploader.upload_stream(
+//       { folder: 'products' },
+//       (error, result) => {
+//         if (error) return reject(error);
+//         resolve(result);
+//       },
+//     );
+
+//     Readable.from(buffer).pipe(uploadStream);
+//   });
+// }
+
+async uploadImage(buffer:Buffer):Promise<UploadApiResponse>{
+    return new Promise((resolve,reject) =>{
+        const upload =  cloudinary.uploader.upload_stream(
+            { folder: 'marketplace/products'},
+            (error,result)=>{
+                if(error) reject(error);
+                resolve(result as UploadApiResponse)
+            })
+        
+
+        Readable.from(buffer).pipe(upload)
+    });
+}
+
+    // async uploadImage(filePath : string){
+    //     return await cloudinary.uploader.upload(filePath,{
+    //         folder: 'marketplace/products',
+    //     })
+    // }
 
     async deleteImage(publicId :string){
-        return await cloudinary.uploader.destroy(publicId)
+        const id = publicId.split('/').slice(1).join('/')
+        console.log("publicId",publicId)
+        console.log("id",id)
+        return await cloudinary.uploader.destroy(id)
     }
+
+    
 }

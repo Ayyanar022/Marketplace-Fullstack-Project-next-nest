@@ -21,10 +21,10 @@ export const createProduct = async(
     payload:{
         name:string;
         description?:string;
-        price:number;
-        // imageUrl:string;
         categoryId:string;
+        price:number;
         stock:number;
+        imageUrl:string[];
     }
 ):Promise<Product>=>{
 
@@ -52,9 +52,9 @@ export const updateProduct = async(id:string,    payload:Partial<{
         name:string;
         description?:string;
         price:number;
-        // imageUrl:string;
         categoryId:string;
         stock:number;
+        imageUrl?:string[];
     }>
 ):Promise<Product>=>{
     const res = await api.patch(`/products/${id}`,payload);
@@ -64,4 +64,8 @@ export const updateProduct = async(id:string,    payload:Partial<{
 
 export const deleteProduct = async(id:string)=>{
     await api.delete(`/products/${id}`)
+}
+
+export const deleteImage = async(id:string)=>{
+    await api.delete(`/products/image/${id}`)
 }
