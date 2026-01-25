@@ -25,7 +25,6 @@ const Login = () => {
         const data = await loginApi(email,password);
         if(data.status===400) return toast.error(data.response.message||"Invalid");
         
-        console.log("data",data)
        
           // to store crrent user in store
         dispatch(

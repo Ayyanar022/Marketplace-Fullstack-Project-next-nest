@@ -50,7 +50,6 @@ export class OrderController {
          @Param("id")id:string,
          @Body()dto:UpdateOrderItemStatusDto
     ){
-        // console.log("sellerId,id,dto.status-----pp",user.id,id,dto.status)
         return this.orderService.updateOrderItemStatus(user.id,id,dto.status)
     }
 
@@ -59,7 +58,6 @@ export class OrderController {
     @Roles("CUSTOMER")
     @UseGuards(RoleGuard,JwtAuthGaurd)
     cancelOrederItem(@CurrentUser()user ,@Param('id')id:string){
-        // console.log("uerid-----id",user.id,id)
         return this.orderService.cancelOrderItem(user.id,id)
     }
 

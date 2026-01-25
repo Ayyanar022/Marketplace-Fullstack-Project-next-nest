@@ -17,7 +17,6 @@ const Products = () => {
     const   handleGetProduct = async()=> {
       try{
               const data = await getSellerProducts()
-              console.log("data--22",data)
               setProducts(data)
       }catch(e){
         console.log('er',e)
@@ -35,7 +34,6 @@ const Products = () => {
       <h1>Loading Products ...</h1>
     </div>
   }
-// console.log("products",products)
 
   return (
     <div>

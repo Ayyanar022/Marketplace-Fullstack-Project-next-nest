@@ -30,7 +30,6 @@ function ProductDetailPage(){
 
                 const data = await getProductById(id as string);
                 setProduct(data);
-                console.log("data---",data)
             }catch(e){
             toast.error("Product not found ");
             router.replace('/products')

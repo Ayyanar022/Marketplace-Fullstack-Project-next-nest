@@ -36,7 +36,6 @@ export const createProduct = async(
 // seller product
 export const getSellerProducts = async():Promise<Product[]>=>{
     const res = await api.get('/products/seller-getproduct')
-    // console.log("res----234",res)
     return res.data.data ;
 }
 

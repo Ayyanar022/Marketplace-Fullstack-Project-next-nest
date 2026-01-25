@@ -50,7 +50,6 @@ function SellerProductDetailPage(){
                 stock:product.stock,
                 imageUrl:imageUrl
             })
-            console.log("res---kk",res)
             toast.success("Prodcut Updated")
              router.push('/seller/products')
         }catch(e:any){            
@@ -75,7 +74,6 @@ function SellerProductDetailPage(){
 
     const handleDeleteImage= async(img:any)=>{
         try{
-            console.log("img-----",img)
             await deleteImage(img.id)
             setProduct((prev:any)=>({...prev,images: prev.images?.filter((i:any)=>i.id!==img.id)}))
             // fetchProduct()
@@ -90,7 +88,6 @@ function SellerProductDetailPage(){
     if(loading) return <p>Loading ...</p>
     if(!product) return null
 
-    console.log("product",product)
 
     return (
         <div className="max-wxl">

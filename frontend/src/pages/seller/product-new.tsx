@@ -58,7 +58,6 @@ const ProductNew = () => {
 
   const handleSubmitAdd = async (e:React.FormEvent)=>{
     e.preventDefault();
-    console.log("formData",formData)
 
     if(!formData.categoryId || !formData.name || !formData.price
       ||!formData.description ||!formData.stock
@@ -74,10 +73,7 @@ const ProductNew = () => {
       stock:+formData.stock,
       imageUrl :imageUrl,
       })
-
-      console.log("image url ",imageUrl)
-
-      console.log("res---",res)
+ 
 
       toast.success("Product added successfully");
       router.push("/seller/products")

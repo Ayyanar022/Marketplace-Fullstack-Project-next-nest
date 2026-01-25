@@ -1,3 +1,5 @@
+
+
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 
@@ -20,4 +22,13 @@ export class CategoriesService {
     delete(id:string){
         return this.prisma.category.delete({where:{id}})
     }
+
+   updateCat(id:string,data:string){
+        return this.prisma.category.update({where:{id},
+        data:{name:data}})
+
+   }
+
+
+
 }

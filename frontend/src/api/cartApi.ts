@@ -6,7 +6,6 @@ export const addToCart = async (
     productId:string,
     quantity=1
 )=>{
-    console.log("")
     const res = await api.post('/cart',{productId,quantity});
     return res.data.data;
 }
@@ -22,7 +21,6 @@ export const updateCartItemQty = async(
     cartItemId:string,
     quantity:number
 )=>{
-    console.log(" cart ",quantity)
     const res = await api.patch(`/cart/${cartItemId}`,{quantity});
     return res.data.data;
 }

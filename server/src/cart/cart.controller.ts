@@ -36,7 +36,6 @@ export class CartController {
 
     @Delete(':id')
     removeItem(@Param('id') itemId:string){
-        console.log("------",itemId)
         return this.cartService.removeItem(itemId)
     }
 

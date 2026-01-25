@@ -15,7 +15,6 @@ function ProductsPage(){
         const fetchProducts = async ()=>{
             try{
                 const data = await getProducts()
-                console.log("data----product",data)
                 setProducts(data)
 
             }catch(e){
@@ -31,7 +30,6 @@ function ProductsPage(){
         return  <p className="text-center mt-10">Loading Products...</p>
     }
 
-    console.log("products--",products)
 
     return(
         <div className="max-w-6xl mx-auto">

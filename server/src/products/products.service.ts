@@ -28,16 +28,6 @@ export class ProductsService {
 
         let sellerId  = user.id ;  // seller default 
 
-        // // if admin - >seller must be inside dto
-        // if(user.role==='ADMIN'){
-        //     if(!dto.sellerId)throw new BadRequestException("Admin must provide seller id")
-            
-        //     sellerId = dto.sellerId;
-        // }
-
-        console.log("dto in create product",dto)
-
-
         if(!category) throw new BadRequestException("Category not found")        
         return this.prisma.product.create({
                 data:{
@@ -217,6 +207,14 @@ export class ProductsService {
             },
         })
 
+    }
+
+
+    //product count
+    productCount(){
+        return this.prisma.product.count({
+            where:{isActive:true}
+        })
     }
 
     

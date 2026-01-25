@@ -52,8 +52,6 @@ async uploadImage(buffer:Buffer):Promise<UploadApiResponse>{
 
     async deleteImage(publicId :string){
         const id = publicId.split('/').slice(1).join('/')
-        console.log("publicId",publicId)
-        console.log("id",id)
         return await cloudinary.uploader.destroy(id)
     }
 

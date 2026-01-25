@@ -15,7 +15,6 @@ const Orders = () => {
 const fetchData =()=>{
   api.get("order/seller")
       .then((res)=>{setOrders(res.data.data);
-        console.log("seller order " ,res.data)
       })
       .catch(()=>toast.error("Failed to load orders"))
       .finally(()=>setLoading(false))
@@ -36,7 +35,6 @@ const fetchData =()=>{
     }
   }
 
-  console.log("orders seller",orders)
 
   if(loading) return <p>Loading orders...</p>
 

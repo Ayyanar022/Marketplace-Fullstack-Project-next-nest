@@ -40,6 +40,29 @@ export class UsersService {
 
     }
 
+    // get all seller
+    getAllUsers(){
+        return this.prisma.user.findMany({
+            where:{role:"SELLER"},
+            include:{products:true}
+        })
+    }
+
+
+    //user count
+    countUser(){
+        return this.prisma.user.count({
+            where:{role:"CUSTOMER"}
+        })
+    }
+
+    // seller count
+    countSeller(){
+        return this.prisma.user.count({
+            where:{role:"SELLER"}
+        })
+    }
+
 
 
 

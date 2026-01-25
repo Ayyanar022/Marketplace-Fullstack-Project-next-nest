@@ -28,12 +28,10 @@ const CartPage = () => {
         fetchCart();
     },[])
 
-    console.log("cart---",cart)
 
     // update qty
     const handleChangeQty = async(e:any,id:string)=>{
         const qty = +(e.target.value);
-        console.log("qty---",qty)
         try{
             await updateCartItemQty(id,qty );
             const data = await getCart() ;
@@ -62,7 +60,6 @@ const CartPage = () => {
     if(loading) return <p className="text-center">Loading Cart..</p>
     if(!cart || cart?.cartItems?.length===0)
         return <p className="text-center">Your Cart is Empty</p>
-    console.log("cart---",cart)
 
   return (
     <div className="max-w-2xl mx-auto">

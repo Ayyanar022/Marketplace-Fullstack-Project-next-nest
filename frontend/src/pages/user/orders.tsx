@@ -16,7 +16,6 @@ const Orders = () => {
      api.get('/order/my')
       .then(res=>{
         setOrder(res.data.data)
-        // console.log('my order --',res.data.data)
       })
       .finally(()=>setLoading(false))
   }

@@ -10,7 +10,6 @@ export const placeOrder = async ()=>{
             'Idempotency-Key':orderKey,
         }
     });
-    // console.log("orders -----",res)
     return res.data.data;
 }
 

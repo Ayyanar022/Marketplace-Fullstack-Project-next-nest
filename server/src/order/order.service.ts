@@ -200,14 +200,34 @@ export class OrderService {
                             stock:{increment : orderItem.quantity}
                         }
                     })
+        })    
+    }
+
+
+
+    // order count 
+    orderCount(){
+        return this.prisma.orderItem.count()
+    }
+
+
+
+    // order count based on status 
+   async orderSatusCount(){
+        const data = await this.prisma.orderItem.groupBy({
+            by:['status'],
+            _count:{
+                status:true
+            }
         })
-     
 
 
-      
-           
+        const statusCount = data.reduce((acc,cur)=>{
+            acc[cur.status] = cur._count.status
+            return acc
+        },{})
 
-    
+        return statusCount;
     }
 
 
