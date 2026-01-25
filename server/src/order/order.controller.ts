@@ -30,9 +30,7 @@ export class OrderController {
     @Roles("SELLER",'ADMIN')
     @Get('seller')
    async getSellerOrder(@CurrentUser() user){
-        console.log("seller order --- ",user)
         const res = await this.orderService.getSellerOredrs(user.id)
-        console.log("return--res",res)
         return res
     }
 

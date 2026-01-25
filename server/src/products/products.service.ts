@@ -62,9 +62,9 @@ export class ProductsService {
 
     async sellerGetAllProdct(id:string){
         return this.prisma.product.findMany({
-            where:{sellerId:id},
+            where:{sellerId:id},          
             
-            // include:{seller:true ,images:true , category:true}
+            include:{seller:true ,images:true , category:true}
         })
     }
 

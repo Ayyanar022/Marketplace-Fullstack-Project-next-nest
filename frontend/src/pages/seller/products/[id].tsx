@@ -131,7 +131,7 @@ function SellerProductDetailPage(){
                         <div key={img.id} className="w-auto max-w-56 h-28 relative">
                             <button onClick={()=>handleDeleteImage(img)}>
                             <Trash2 className="w-7 h-7 text-red-500 hover:text-red-600 cursor-pointer 
-                            absolute right-1 top-1 bg-white rounded-full p-1 border border-black/20"     />
+                            absolute right-0 top-6 bg-white rounded-full p-1 border border-black/20"     />
                             </button>
                             <img src={img.url} alt=""  className="w-full h-full object-cover" />
                         </div>

@@ -50,6 +50,7 @@ export class ProductsController {
     @Get('seller-getproduct')
     async getSellerProduct(@CurrentUser() user ){
         const data = await this.productService.sellerGetAllProdct(user.id)
+        console.log("data",data)
         return data
     }
 

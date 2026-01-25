@@ -106,7 +106,7 @@ export class OrderService {
             where:{userId},
             include:{
                 items:{
-                    include:{product:true}
+                    include:{product:{include:{images:true}}}
                 }
             },
             orderBy:{createdAt:'desc'},
@@ -128,7 +128,7 @@ export class OrderService {
                     where:{
                         product:{sellerId}
                     },
-                    include:{product:true}
+                    include:{product:{include:{images:true}}}
                 }
             }
         })

@@ -14,7 +14,7 @@ const Orders = () => {
 
 const fetchData =()=>{
   api.get("order/seller")
-      .then((res)=>{setOrders(res.data);
+      .then((res)=>{setOrders(res.data.data);
         console.log("seller order " ,res.data)
       })
       .catch(()=>toast.error("Failed to load orders"))
@@ -36,6 +36,7 @@ const fetchData =()=>{
     }
   }
 
+  console.log("orders seller",orders)
 
   if(loading) return <p>Loading orders...</p>
 
@@ -64,10 +65,17 @@ const fetchData =()=>{
             <div key={item.id} className="flex justify-between items-start border rounded-lg p-4 bg-gray-50">
             
             {/* Left */}
-            <div className='space-y-1'>
+            <div className='space-y-1 flex gap-10 items-center'>
+              <div className='h-16 w-32'>
+                <img src={item.product.images?.[0]?.url} alt=""  className='w-full  h-full object-contain'/>
+              </div>
+
+              <div>
               <p className='font-medium'>{item.product.name}</p>
               <p className='text-sm text-gray-600'> Qty:{item.quantity}</p>
               <p className='text-sm text-gray-600'>Total: ₹{item.price * item.quantity}</p>
+             
+              
 
             {/* Status batch */}
               <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full 
@@ -83,6 +91,7 @@ const fetchData =()=>{
                 
                 `}>{item.status}</span>
 
+            </div>
             </div>
 
 

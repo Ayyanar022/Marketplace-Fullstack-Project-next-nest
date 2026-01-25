@@ -1,5 +1,5 @@
 import api from '@/api/axios'
-import { cancel_Order, getUserOrder } from '@/api/orderApi'
+import { cancel_Order } from '@/api/orderApi'
 import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 import UserLayout from '@/layouts/UserLayout'
 import React, { ReactElement, useEffect, useState } from 'react'
@@ -16,7 +16,7 @@ const Orders = () => {
      api.get('/order/my')
       .then(res=>{
         setOrder(res.data.data)
-        console.log('my order --',res.data.data)
+        // console.log('my order --',res.data.data)
       })
       .finally(()=>setLoading(false))
   }
@@ -44,34 +44,7 @@ const Orders = () => {
       {orders.length===0?(
         <p className='text-muted'>No order yet</p>
       ):(
-        // <div className='space-y-6'>
-        //   {orders.map((order:any)=>(
-
-
-        //     order.items.map((item:any)=>(
-        //        <div key={item.id} className='border rounded p-4'>
-        //       {/* <p className=''><b>Order ID:</b>{item.id}</p> */}
-        //       <p><b>Name:</b>{item.product.name}</p>
-        //       <p><b>Status:</b>{item.status}</p>
-        //       <p><b>Qunatity:</b>{item.quantity}</p>
-        //       <p><b>Price:</b>₹{item.price}</p>
-        //       <p><b>Total:</b>₹{item.price * item.quantity}</p>
-
-
-        //       {order.status==='PENDING' &&(
-        //         <button className='' onClick={()=>cancelOrder(item.id)}>
-        //           Cancel Order
-        //         </button>
-        //       ) }
-
-        //     </div>
-        //     ))
-          
-           
-        //   ))}
-          
-        // </div>
-
+       
         <div className='space-y-6'>
           {
             orders?.map((order:any)=>(
@@ -91,7 +64,7 @@ const Orders = () => {
                       >
                         {/* Product Image */}
                         <img 
-                        src={item.product.iamge?.[0]?.url} 
+                        src={item.product.images?.[0]?.url} 
                         alt={item.product.name}
                         className='w-28 h-28 object-cover rounded-md border'
                         />

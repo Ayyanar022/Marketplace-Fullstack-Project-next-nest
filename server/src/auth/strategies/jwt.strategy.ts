@@ -16,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
 
     validate(payload:any){
         // whatevr here return that becomes req.user
-        console.log("payload",payload)
+        // console.log("payload",payload)
         return payload;  // request.user = payload
     }
 

@@ -17,7 +17,7 @@ const Products = () => {
     const   handleGetProduct = async()=> {
       try{
               const data = await getSellerProducts()
-              // console.log("data--22",data)
+              console.log("data--22",data)
               setProducts(data)
       }catch(e){
         console.log('er',e)
@@ -46,7 +46,10 @@ const Products = () => {
         <div>
           {products.map((p)=>(
             <Link  href={`/seller/products/${p.id}`} key={p.id} className='bg-cardBg border rounded 
-            p-4 flex justify-between items-center'>
+            p-4 flex gap-10 items-center'>
+
+              <img src={p?.images[0]?.url} alt=""  className='w-20 h-20'/>
+
               <div>
                 <h2 className='font-medium'>{p.name}</h2>
                 <p className='text-sm text-textSecondary'>₹{p.price}</p>
