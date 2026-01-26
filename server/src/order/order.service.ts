@@ -222,12 +222,36 @@ export class OrderService {
         })
 
 
-        const statusCount = data.reduce((acc,cur)=>{
+    const statusCount = data.reduce((acc,cur)=>{
             acc[cur.status] = cur._count.status
             return acc
         },{})
 
         return statusCount;
+    }
+
+
+
+    // get seller order item count
+    sellerorderItemCount(sellerId:string){
+        return this.prisma.orderItem.count({
+            where:{sellerId}
+        })
+    }
+
+    //get seller orderItem by status ccount
+   async ordersBySattusCount(sellerId:string){
+        const data  = await this.prisma.orderItem.groupBy({
+            by:['status'] ,
+            _count:{status:true}
+        })
+
+        const statuscount = data.reduce((acc,cur)=>{
+            acc[cur.status] = cur._count.status;
+            return acc
+        },{})
+
+        return statuscount;
     }
 
 

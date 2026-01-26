@@ -10,13 +10,14 @@ import { OrderModule } from './order/order.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { adminModule } from './admin/admin.module';
+import { SellerModule } from './seller/seller.module';
 
 @Module({
   imports: [ ConfigModule.forRoot({isGlobal:true}),
     AuthModule, UsersModule ,
      PrismaModule, CategoriesModule,
       ProductsModule, CartModule, OrderModule,
-      adminModule,
+      adminModule,SellerModule,
     
       // for rate limiting--------------
       ThrottlerModule.forRoot({

@@ -217,6 +217,30 @@ export class ProductsService {
         })
     }
 
+    // sellerProduct count
+    sellerProductCount(sellerId){
+        return this.prisma.product.count({
+            where:{sellerId:sellerId , isActive:true}
+        })
+
+    }
+
+    //low stock product  low stock =5
+    lowstockProductCount(sellerId){
+        const lowStock = 5 ;
+        return this.prisma.product.findMany({
+            where :{sellerId:sellerId,isActive:true ,
+                stock:{lt:lowStock}
+            },
+            select:{
+                id:true,
+                stock:true,
+                name:true,
+                category:{select:{ id:true ,name:true}}
+            }
+        })
+    }
+
     
 
 
