@@ -21,9 +21,13 @@ const Navbar = () => {
     <header className='bg-cardBg border-b border-accent/10'>
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center
       justify-between">
-        <Link href='/products' className='font-semibold text-primary'>
+        <Link href='/' className='font-semibold text-primary'>
           MarketPlace
         </Link>
+
+        <nav>
+          <Link href='/products'>Products</Link>
+        </nav>
 
         <nav className="flex items-center gap-4 text-sm">
           {!isAuthenticated ?(

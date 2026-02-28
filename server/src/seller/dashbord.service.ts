@@ -19,7 +19,7 @@ export class DashbordSellerService{
         const orderItemCount =await this.orderService.sellerorderItemCount(sellerId)
         const orderBysatusC =await this.orderService.ordersBySattusCount(sellerId);
 
-        console.log("productcount------",productcount)
+        // console.log("productcount------",productcount)
 
         return{
             productcount,

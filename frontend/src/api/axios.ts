@@ -23,7 +23,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error)=>{
-        if(error.response?.this.state ===401){
+        if(error.response?.this?.state ===401){
             clearAuth();
             window.location.href = '/login';
         }

@@ -12,7 +12,7 @@ const PublicLayout:React.FC<PublicLayoutProps> = ({children}) => {
         <Navbar />
 
     {/* page content */}
-        <main className='flex-1 w-full p-4'>
+        <main className='flex-1 w-full p-4 h-screen flex justify-center items-center'>
         {children}
         </main>      
 

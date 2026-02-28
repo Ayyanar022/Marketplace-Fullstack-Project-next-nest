@@ -42,35 +42,43 @@ const Signup = () => {
   }
   
   return (
-    <div className='max-w-md mx-auto bg-cardBg p-6 rounded shadow'>
-      <h1 className='text-xl font-semibold mb-4'>
-        Signup
-      </h1>
-      {error && <p className='text-red-500 mb-3'>{error}</p>}
 
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input type="text" placeholder='Name'
-         className='border rounded p-2 '
-         value={formData.name}
-         onChange={(e)=>setFormData((p)=>({...p ,name:e.target.value}))}         
-         />
-        <input type="email" className='border p-2 rounded'
-         placeholder='Email'
-         value={formData.email}
+        <div className='w-full md:w-1/2 mx-auto bg-cardBg p-12 rounded-lg  shadow '>
+      <h1 className='text-xl font-semibold mb-8 text-center'>SignUp</h1>
+          <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+                 
+        <div className='flex flex-col '>
+          <label htmlFor="name" className='text-sm'>User name</label>
+        <input type="text" id='name' placeholder='User Name' className='border p-2 rounded' 
+             value={formData.name}
+         onChange={(e)=>setFormData((p)=>({...p ,name:e.target.value}))} 
+        />
+        </div>
+        <div className='flex flex-col '>
+          <label htmlFor="email" className='text-sm'>Email</label>
+        <input type="email" id='email' placeholder='Email' className='border p-2 rounded' 
+          value={formData.email}
          onChange={(e)=>setFormData((p)=>({...p,email:e.target.value}))}
-         
-         />
-        <input type="password" className='border p-2 rounded' 
-        placeholder='Password'
+        />
+        </div>
+       
+        <div className='flex flex-col '>
+          <label htmlFor="password" className='text-sm'>Password</label>
+        <input type="password" id='password' placeholder='Password' className='border p-2 rounded' 
         value={formData.password}
         onChange={(e)=>setFormData(p=>({...p,password:e.target.value}))}
         />
+        </div>
+              
+
         <button type='submit' className='bg-primary text-white py-2 rounded'>
           {loading ? "Signing up...": "Signup"}
         </button>
       </form>
     </div>
   )
+
+
 }
 
 Signup.getLayout = function getLayout(page:ReactElement){
@@ -79,3 +87,36 @@ Signup.getLayout = function getLayout(page:ReactElement){
 
 
 export default Signup
+
+
+
+
+
+    // <div className='max-w-md mx-auto bg-cardBg p-6 rounded shadow'>
+    //   <h1 className='text-xl font-semibold mb-4'>
+    //     Signup
+    //   </h1>
+    //   {error && <p className='text-red-500 mb-3'>{error}</p>}
+
+    //   <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+    //     <input type="text" placeholder='Name'
+    //      className='border rounded p-2 '
+    //      value={formData.name}
+    //      onChange={(e)=>setFormData((p)=>({...p ,name:e.target.value}))}         
+    //      />
+    //     <input type="email" className='border p-2 rounded'
+    //      placeholder='Email'
+    //      value={formData.email}
+    //      onChange={(e)=>setFormData((p)=>({...p,email:e.target.value}))}
+         
+    //      />
+    //     <input type="password" className='border p-2 rounded' 
+    //     placeholder='Password'
+    //     value={formData.password}
+    //     onChange={(e)=>setFormData(p=>({...p,password:e.target.value}))}
+    //     />
+    //     <button type='submit' className='bg-primary text-white py-2 rounded'>
+    //       {loading ? "Signing up...": "Signup"}
+    //     </button>
+    //   </form>
+    // </div>

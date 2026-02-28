@@ -1,6 +1,7 @@
 import { loginApi } from '@/api/authApi';
 import { loginSuccess } from '@/features/auth/authSlice';
 import PublicLayout from '@/layouts/PublicLayout'
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react'
 import toast from 'react-hot-toast';
@@ -26,7 +27,7 @@ const Login = () => {
         if(data.status===400) return toast.error(data.response.message||"Invalid");
         
        
-          // to store crrent user in store
+          // to store current user in store
         dispatch(
           loginSuccess({
             user:data.user,
@@ -50,23 +51,38 @@ const Login = () => {
 
 
   return (
-    <div className='max-w-md mx-auto bg-cardBg p-6 rounded shadow'>
-      <h1 className='text-xl font-semibold mb-4'>Login</h1>
-     {error && <p className='text-red-500 mb-3'>{error}</p>}
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input type="email" placeholder='Email' className='border p-2 rounded' 
+
+    <div className='w-full md:w-1/2 mx-auto bg-cardBg p-12 rounded-lg  shadow '>
+      <h1 className='text-xl font-semibold mb-8 text-center'>Login</h1>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-8 '>
+        
+        <div className='flex flex-col '>
+          <label htmlFor="name" className='text-sm'>User name</label>
+        <input type="email" id='name' placeholder='Email' className='border p-2 rounded' 
         value={email}
         onChange={(e)=>setEmail(e.target.value)}
         />
-        <input type="password" placeholder='Password' className='border p-2 rounded'
+        </div>
+
+        <div  className='flex flex-col '>
+          <div className='flex justify-between'>
+          <label htmlFor="password" className='text-sm'>Password</label>
+          <label htmlFor="password" className='text-sm text-primary'>Forgot Password?</label>
+          </div>
+
+        <input type="password" id='password' placeholder='Password' className='border p-2 rounded'
         value={password}
         onChange={(e)=>setPassword(e.target.value)}
         />
-        <button type='submit' className='bg-primary text-white py-2 rounded'>
+        </div>
+      
+        <button type='submit' className='bg-primary text-white py-2.5 mt-5   rounded'>
           {loading ? "Logging in..." : "Login"}
         </button>
+        <p className='text-sm text-slate-500'>Don't have an account? <Link className='text-primary' href='/'>Sign up</Link></p>
       </form>
     </div>
+
   )
 }
 
