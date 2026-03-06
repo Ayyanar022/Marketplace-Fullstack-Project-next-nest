@@ -53,34 +53,42 @@ const Login = () => {
   return (
 
     <div className='w-full md:w-1/2 mx-auto bg-cardBg p-12 rounded-lg  shadow '>
+      <div>
+        <div>
+
+        </div>
+        <div>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-8 '>
+            
+            <div className='flex flex-col '>
+              <label htmlFor="name" className='text-sm'>User name</label>
+            <input type="email" id='name' placeholder='Email' className='border p-2 rounded' 
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            />
+            </div>
+
+            <div  className='flex flex-col '>
+              <div className='flex justify-between'>
+              <label htmlFor="password" className='text-sm'>Password</label>
+              <label htmlFor="password" className='text-sm text-primary'>Forgot Password?</label>
+              </div>
+
+            <input type="password" id='password' placeholder='Password' className='border p-2 rounded'
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
+            />
+            </div>
+          
+            <button type='submit' className='bg-primary text-white py-2.5 mt-5   rounded'>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+            <p className='text-sm text-slate-500'>Don't have an account? <Link className='text-primary' href='/'>Sign up</Link></p>
+          </form>
+        </div>
+      </div>
       <h1 className='text-xl font-semibold mb-8 text-center'>Login</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-8 '>
-        
-        <div className='flex flex-col '>
-          <label htmlFor="name" className='text-sm'>User name</label>
-        <input type="email" id='name' placeholder='Email' className='border p-2 rounded' 
-        value={email}
-        onChange={(e)=>setEmail(e.target.value)}
-        />
-        </div>
-
-        <div  className='flex flex-col '>
-          <div className='flex justify-between'>
-          <label htmlFor="password" className='text-sm'>Password</label>
-          <label htmlFor="password" className='text-sm text-primary'>Forgot Password?</label>
-          </div>
-
-        <input type="password" id='password' placeholder='Password' className='border p-2 rounded'
-        value={password}
-        onChange={(e)=>setPassword(e.target.value)}
-        />
-        </div>
-      
-        <button type='submit' className='bg-primary text-white py-2.5 mt-5   rounded'>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-        <p className='text-sm text-slate-500'>Don't have an account? <Link className='text-primary' href='/'>Sign up</Link></p>
-      </form>
+    
     </div>
 
   )

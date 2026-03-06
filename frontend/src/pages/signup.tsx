@@ -69,11 +69,19 @@ const Signup = () => {
         onChange={(e)=>setFormData(p=>({...p,password:e.target.value}))}
         />
         </div>
+
+        <div className='flex flex-col'>
+          <label htmlFor="Confirm password" className='text-sm'>Confirm password</label>
+          <input type="confirm password" id='confirm password' placeholder='Give same password' className='border p-2 rounded'
+           />
+        </div>
               
 
         <button type='submit' className='bg-primary text-white py-2 rounded'>
           {loading ? "Signing up...": "Signup"}
         </button>
+
+        <a href="" className='text-sm flex justify-center text-slate-500'>Already have an account? <span className='text-primary'>Sign in</span> </a>
       </form>
     </div>
   )

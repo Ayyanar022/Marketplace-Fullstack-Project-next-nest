@@ -18,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className='bg-cardBg border-b border-accent/10'>
+    <header className='sticky top-0 bg-white/40 border-b border-accent/10 backdrop-blur-lg'>
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center
       justify-between">
         <Link href='/' className='font-semibold text-primary'>
