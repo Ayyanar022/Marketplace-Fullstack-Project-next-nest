@@ -81,3 +81,50 @@ button {
 input {
   font-family: var(--font);
 }
+
+/* //------------------------------------------- */
+
+.login-bg{
+   background: linear-gradient(135deg, var(--color-primary) 0%, #059669 50%, #047857 100%)
+}
+
+/* // to animate bounce  */
+.a1{
+  animation-delay:0s
+}
+.a2{
+  animation-delay:0.5s
+}
+.a3{
+  animation-delay:1s
+}
+.a4{
+  animation-delay:1.5s
+}
+.a5{
+  animation-delay:2s
+}
+
+h2{
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.login-input-wrap:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+  background: var(--color-surface);
+}
+
+.login-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+}
+
+.login-divider::before,
+.login-divider::after{
+    content: "";
+    flex:1;
+    height: 1px;
+    background: var(--color-border);
+}
