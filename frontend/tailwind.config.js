@@ -65,7 +65,7 @@ module.exports = {
     },
 
     fontFamily: {
-      sans: ["var(--font)"],
+      // sans: ["var(--font)"],
     },
 
     transitionTimingFunction: {

@@ -11,6 +11,10 @@ import { getAuth } from "@/utils/authStorage";
 import { authRestored, loginSuccess, logout } from "@/features/auth/authSlice";
 import { Toaster } from "react-hot-toast";
 
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+
 export type NextPageWithLayout = NextPage & {
   getLayout? : (page:ReactElement)=>ReactNode;
 }
@@ -46,13 +50,13 @@ export default function App (props:AppPropsWithLayout){
 
     return (
       <Provider store={store}>
-        <>
+        <div className={inter.className}>
        <AppInitializer  {...props}/>
        <Toaster 
             position="top-right"
             toastOptions={{duration:3000}}
         />
-        </>
+        </div>
       </Provider>
     )
 }
