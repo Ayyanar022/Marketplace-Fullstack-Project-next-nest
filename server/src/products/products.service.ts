@@ -9,7 +9,7 @@ export class ProductsService {
 
     // for public and user-----------
     findAll(){
-        return this.prisma.product.findMany({include:{images:true}})
+        return this.prisma.product.findMany({include:{images:true,category:{select:{name:true,id:true}}}})
     }
 
     findUnique(id:string){

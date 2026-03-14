@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 
 const CartPage = () => {
-    useProtectedRoute(["CUSTOMER"]);
+    // useProtectedRoute(["CUSTOMER"]);
 
     const [cart,setCart] = useState<any>(null);
     const [loading,setLoading] = useState(true);
@@ -20,7 +20,7 @@ const CartPage = () => {
              const data = await getCart()
             setCart(data);
             }catch(e){
-                toast.error("Failed to load cart");
+                console.log(e)
             }finally{
                 setLoading(false)
             }
@@ -62,7 +62,7 @@ const CartPage = () => {
         return <p className="text-center">Your Cart is Empty</p>
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto min-h-screen">
         <h1 className="text-2xl font-semibold mb-6">My Cart</h1>
         <div className="space-y-4">
             {cart?.cartItems?.map((item:any)=>(

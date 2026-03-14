@@ -71,6 +71,16 @@ module.exports = {
     transitionTimingFunction: {
       DEFAULT: "var(--transition)",
     },
+    animation:{
+      badgePop : "badgePop 0.3s ease"
+    },
+      keyframes: {
+        badgePop: {
+          "0%": { transform: "scale(0)" },
+          "70%": { transform: "scale(1.3)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
   },
 },
 plugins: [],

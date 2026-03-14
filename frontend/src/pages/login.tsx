@@ -67,16 +67,16 @@ const Login = () => {
 
   return (
 
-    <div className='flex flex-1 items-center justify-center p-2 lg:p-20 min-h-[calc(100vh-120px)]'>
+    <div className='flex flex-1 items-center justify-center p-0 lg:p-10 min-h-[calc(100vh-120px)]'>
       <div className='grid grid-cols-1 md:grid-cols-2 max-w-[880px] w-full bg-surface rounded-xl overflow-hidden shadow-md border-border'>
         <div className='login-bg text-white flex items-center justify-center p-3 py-8 lg:p-10 lg:py-16 overflow-hidden'>
             <div className='relative text-center'>
                 <div className="mb-7 md:mb-12">
-                  <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a2">🍓</span>
-                  <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a3">🥦</span>
-                  <span className="inline-block text-4xl m-2 animate-bounce a1">🥑</span>
+                  <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a2">👗</span>
+                  <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a3">📱</span>
+                  <span className="inline-block text-4xl m-2 animate-bounce art-emoji  a1">🛒</span> 
                   <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a4">🍊</span>
-                  <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a5">🫐</span>
+                  <span className="inline-block text-4xl m-2 animate-bounce  art-emoji a5">🍓</span>
               </div>
               <h2 className='text-2xl'>Welcome to Marketplace</h2>
               <p className='text-sm mt-3'>Your one-stop destination for fresh, organic groceries from multiple sellers, delivered straight to your door.</p>
@@ -85,7 +85,7 @@ const Login = () => {
         </div>
 
         {/* form */}
-        <div className='py-10 px-8 flex flex-col '>
+        <div className='py-10 p-4 md:px-10 flex flex-col '>
               <div className='mb-7'>
                 <Link href={'/'} className='inline-flex items-center gap-1 text-primary mb-5 font-bold text-xl'>
                  <span>🛒</span> Market Place

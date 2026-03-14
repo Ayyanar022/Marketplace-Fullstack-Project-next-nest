@@ -128,3 +128,33 @@ h2{
     height: 1px;
     background: var(--color-border);
 }
+
+
+
+/* header */
+
+.nav-link {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.cart-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
